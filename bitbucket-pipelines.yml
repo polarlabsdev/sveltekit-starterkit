@@ -23,7 +23,7 @@ pipelines:
           script:
             - npm install
             - npx -y playwright@1.41.1 install --with-deps
-            - npm testg
+            - npm test
       - step:
           name: Code linting
           script:
