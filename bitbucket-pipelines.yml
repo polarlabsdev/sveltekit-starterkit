@@ -1,24 +1,30 @@
-#  Template NodeJS build
-
-#  This template allows you to validate your NodeJS code.
-#  The workflow allows running tests and code linting on the default branch.
-
 image: node:20
 
 pipelines:
-  default:
-    - parallel:
-        - step:
-            name: Build and Test
-            caches:
-              - node
-            script:
-              - npm install
-              - npm test
-        - step:
-            name: Code linting
-            script:
-              - npm install eslint
-              - npx eslint .
-            caches:
-              - node
+  branches:
+    main:
+      - step:
+          name: Upload image to Digital Ocean
+          script:
+            - export BITBUCKET_COMMIT_SHORT=$(echo $BITBUCKET_COMMIT | cut -c1-7)
+            - export IMAGE_NAME=jerrypolarlabs/polarlabs_homepage:$BITBUCKET_COMMIT_SHORT
+            - docker build -t $IMAGE_NAME .
+            - docker login registry.digitalocean.com -u $CONTAINER_REGISTRY_USERNAME -p $CONTAINER_REGISTRY_PASSWORD
+            - docker push $IMAGE_NAME
+
+  pull-requests:
+    '**':
+      # - step:
+      #     name: Test
+      #     caches:
+      #       - node
+      #     script:
+      #       - npm install
+      #       - npm test
+      - step:
+          name: Code linting
+          script:
+            - npm install eslint
+            - npx eslint .
+          caches:
+            - node
