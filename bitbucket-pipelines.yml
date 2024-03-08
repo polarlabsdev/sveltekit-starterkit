@@ -11,6 +11,8 @@ pipelines:
             - docker build -t $IMAGE_NAME .
             - docker login registry.digitalocean.com -u $CONTAINER_REGISTRY_USERNAME -p $CONTAINER_REGISTRY_PASSWORD
             - docker push $IMAGE_NAME
+          services:
+            - docker
 
   pull-requests:
     '**':
