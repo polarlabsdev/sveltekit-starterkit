@@ -1,4 +1,4 @@
-image: node:20
+image: node:20-bookworm
 
 pipelines:
   branches:
@@ -16,13 +16,14 @@ pipelines:
 
   pull-requests:
     '**':
-      # - step:
-      #     name: Test
-      #     caches:
-      #       - node
-      #     script:
-      #       - npm install
-      #       - npm test
+      - step:
+          name: Test
+          caches:
+            - node
+          script:
+            - npx -y playwright@1.41.1 install --with-deps
+            - npm install
+            - npm test
       - step:
           name: Code linting
           script:
