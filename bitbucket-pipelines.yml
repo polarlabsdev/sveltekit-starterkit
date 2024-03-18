@@ -1,6 +1,7 @@
-image: node:20-bookworm-slim
-
-# NOTE: Anywhere you install playwright stuff make sure it matches the version in package.json
+# This image is an official playwright image that already contains plawright deps,
+# speeds things up not having to install them every time!
+# NOTE: Make sure it matches the playwright version in package.json
+image: mcr.microsoft.com/playwright:v1.42.1-jammy
 
 pipelines:
   branches:
@@ -13,7 +14,6 @@ pipelines:
             - node
           script:
             - npm install
-            - npx -y playwright@1.42.1 install --with-deps
             - npm run test:ci
       - step:
           name: Upload image to Digital Ocean
@@ -37,5 +37,4 @@ pipelines:
             - node
           script:
             - npm install
-            - npx -y playwright@1.42.1 install --with-deps
             - npm run test:ci
