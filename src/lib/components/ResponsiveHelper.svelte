@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { onMount } from "svelte";
+	import { onMount } from 'svelte';
 
 	let pageWidth!: number;
 	let pageSize: string = 'xxs-screen';
 	let htmlElem: HTMLElement;
-	let htmlFontSize: any;
+	let htmlFontSize: CSSStyleValue | undefined;
 
 	onMount(() => {
 		htmlElem = document.getElementsByTagName('html')[0];
@@ -12,13 +12,21 @@
 
 	// make sure these match your scss variables!
 	$: {
-		if (pageWidth >= 2500) { pageSize = 'xxl-screen' }
-		else if (pageWidth >= 1920) { pageSize = 'xl-screen' }
-		else if (pageWidth >= 1600) { pageSize = 'lg-screen' }
-		else if (pageWidth >= 1024) { pageSize = 'md-screen' }
-		else if (pageWidth >= 768) { pageSize = 'sm-screen' }
-		else if (pageWidth >= 580) { pageSize = 'xs-screen' }	
-		else { pageSize = 'xxs-screen' }	
+		if (pageWidth >= 2500) {
+			pageSize = 'xxl-screen';
+		} else if (pageWidth >= 1920) {
+			pageSize = 'xl-screen';
+		} else if (pageWidth >= 1600) {
+			pageSize = 'lg-screen';
+		} else if (pageWidth >= 1024) {
+			pageSize = 'md-screen';
+		} else if (pageWidth >= 768) {
+			pageSize = 'sm-screen';
+		} else if (pageWidth >= 580) {
+			pageSize = 'xs-screen';
+		} else {
+			pageSize = 'xxs-screen';
+		}
 	}
 
 	$: {
@@ -26,7 +34,6 @@
 			htmlFontSize = htmlElem.computedStyleMap().get('font-size');
 		}
 	}
-		
 </script>
 
 <svelte:window bind:innerWidth={pageWidth} />

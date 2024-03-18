@@ -1,5 +1,5 @@
 <script lang="ts">
-	import ResponsiveHelper from "$lib/components/ResponsiveHelper.svelte";
+	import ResponsiveHelper from '$lib/components/ResponsiveHelper.svelte';
 </script>
 
 <svelte:head>
@@ -19,14 +19,13 @@
 
 		<blockquote>This is a wonderful quote</blockquote>
 
-		<p>Some <a href="#" class="bold uppercase">text</a> to demo some font sizes for paragraphs</p>
+		<p>Some <a href="." class="bold uppercase">text</a> to demo some font sizes for paragraphs</p>
 		<p class="caption text-secondary">Some text to demo some font sizes for paragraphs</p>
 		<p class="footnote">Some text to demo some font sizes for paragraphs</p>
 
-		<hr>
+		<hr />
 
 		<div class="row">
-
 			<div class="col-xxs-12 col-sm-6 col-md-4 col-lg-3 col-xxl-2">
 				<div class="box background-primary"></div>
 			</div>
@@ -34,7 +33,6 @@
 			<div class="col-xxs-12 col-sm-6 col-md-4 col-lg-3 col-xxl-2">
 				<p>Some text to describe the image</p>
 			</div>
-
 		</div>
 	</div>
 </section>

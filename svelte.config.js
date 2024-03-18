@@ -1,6 +1,6 @@
 import adapter from '@sveltejs/adapter-node';
 import preprocess from 'svelte-preprocess';
-import path, { dirname } from 'path';
+import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 const filePath = dirname(fileURLToPath(import.meta.url));
@@ -13,7 +13,7 @@ const config = {
 	preprocess: preprocess({
 		scss: {
 			// adding this line to our scripts makes sure our variables and
-			// mixins are available in svelte page scss style tags 
+			// mixins are available in svelte page scss style tags
 			prependData: `@import '${sassPath}/partials/_variables.scss'; @import '${sassPath}/partials/_mixins.scss';`
 		},
 		postcss: true

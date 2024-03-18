@@ -4,197 +4,201 @@ $header-font: 'Rubik', sans-serif;
 $body-font: 'Fira Code', monospace;
 
 html {
-  font-family: $body-font;
-  color: $grey;
-  font-weight: 400;
-  line-height: 1.5625rem;
-  
-  -webkit-font-smoothing: antialiased;
-  -moz-font-smoothing: antialiased;
-  -o-font-smoothing: antialiased;
-  
-  // set rem base and use min widths to match grid
-  // after this, use only rem units on the rest of the site unless
-  // there's a good reason not to. Rem units will scale based on the
-  // html font size, giving us a single place to easily adjust the
-  // scale of the entire website on different screen sizes.
-  font-size: 13px;
-  
-  @media all and (min-width: $xs-screen) {
-    font-size: 15px;
-  }
-  
-  @media all and (min-width: $md-screen) {
-    font-size: 16px;
-  }
-  
-  @media all and (min-width: $lg-screen) {
-    font-size: 17px;
-  }
+	font-family: $body-font;
+	color: $grey;
+	font-weight: 400;
+	line-height: 1.5625rem;
 
-  @media all and (min-width: $xl-screen) {
-    font-size: 18px;
-  }
-  
-  @media all and (min-width: $xxl-screen) {
-    font-size: 22px;
-  }
+	-webkit-font-smoothing: antialiased;
+	-moz-font-smoothing: antialiased;
+	-o-font-smoothing: antialiased;
+
+	// set rem base and use min widths to match grid
+	// after this, use only rem units on the rest of the site unless
+	// there's a good reason not to. Rem units will scale based on the
+	// html font size, giving us a single place to easily adjust the
+	// scale of the entire website on different screen sizes.
+	font-size: 13px;
+
+	@media all and (min-width: $xs-screen) {
+		font-size: 15px;
+	}
+
+	@media all and (min-width: $md-screen) {
+		font-size: 16px;
+	}
+
+	@media all and (min-width: $lg-screen) {
+		font-size: 17px;
+	}
+
+	@media all and (min-width: $xl-screen) {
+		font-size: 18px;
+	}
+
+	@media all and (min-width: $xxl-screen) {
+		font-size: 22px;
+	}
 }
 
 h1 {
-  font-family: $header-font;
-  font-size: 3rem;
-  color: $dark-grey;
-  font-weight: 700;
-  line-height: 120%;
-  margin: 0.75rem 0;
+	font-family: $header-font;
+	font-size: 3rem;
+	color: $dark-grey;
+	font-weight: 700;
+	line-height: 120%;
+	margin: 0.75rem 0;
 }
 
 h2 {
-  font-family: $header-font;
-  font-size: 2.5rem;
-  color: $dark-grey;
-  font-weight: 700;
-  line-height: 120%;
-  margin: 0.75rem 0;
+	font-family: $header-font;
+	font-size: 2.5rem;
+	color: $dark-grey;
+	font-weight: 700;
+	line-height: 120%;
+	margin: 0.75rem 0;
 }
 
 h3 {
-  font-family: $header-font;
-  font-size: 2.062rem;
-  color: $dark-grey;
-  font-weight: 600;
-  line-height: 120%;
-  margin: 0.625rem 0;
+	font-family: $header-font;
+	font-size: 2.062rem;
+	color: $dark-grey;
+	font-weight: 600;
+	line-height: 120%;
+	margin: 0.625rem 0;
 }
 
 h4 {
-  font-family: $header-font;
-  font-size: 1.75rem;
-  color: $dark-grey;
-  font-weight: 500;
-  line-height: 140%;
-  margin: 0.625rem 0;
+	font-family: $header-font;
+	font-size: 1.75rem;
+	color: $dark-grey;
+	font-weight: 500;
+	line-height: 140%;
+	margin: 0.625rem 0;
 }
 
 h5 {
-  font-family: $header-font;
-  font-size: 1.438rem;
-  color: $dark-grey;
-  font-weight: 500;
-  line-height: 140%;
-  margin: 0.625rem 0;
+	font-family: $header-font;
+	font-size: 1.438rem;
+	color: $dark-grey;
+	font-weight: 500;
+	line-height: 140%;
+	margin: 0.625rem 0;
 }
 
-p, li {
-  font-family: $body-font;
-  font-size: 1rem;
-  color: $grey;
-  font-weight: 400;
-  margin: 0.5rem 0;
-  line-height: 150%;
+p,
+li {
+	font-family: $body-font;
+	font-size: 1rem;
+	color: $grey;
+	font-weight: 400;
+	margin: 0.5rem 0;
+	line-height: 150%;
 }
 
 .lg-text {
-  font-size: 1.125rem !important;
+	font-size: 1.125rem !important;
 }
 
 .caption {
-  font-size: 0.875rem !important;
-  font-weight: 500;
-  line-height: 140%;
+	font-size: 0.875rem !important;
+	font-weight: 500;
+	line-height: 140%;
 }
 
 .footnote {
-  font-size: 0.688rem !important;
-  font-weight: 500;
-  line-height: 140%;
+	font-size: 0.688rem !important;
+	font-weight: 500;
+	line-height: 140%;
 }
 
 a {
-  text-decoration: underline;
-  color: $primary;
-  transition: all 0.2s ease;
-  
-  &:hover {
-    color: darken($primary, 15%) !important;
-  }
+	text-decoration: underline;
+	color: $primary;
+	transition: all 0.2s ease;
+
+	&:hover {
+		color: darken($primary, 15%) !important;
+	}
 }
 
 .no-underline {
-  text-decoration: none;
+	text-decoration: none;
 }
 
 blockquote {
-  margin: 4vh 0;
-  border-top: 0.0625rem solid $subtle-borders;
-  border-bottom: 0.0625rem solid $subtle-borders;
-  text-align: center;
-  padding: 2rem 0;
-  
-  * {
-    font-style: italic;
-  }
-  
-  h1, h2, h3, h4 {
-    font-weight: 400;
-  }
-  
-  p {
-    font-weight: 300;
-  }
+	margin: 4vh 0;
+	border-top: 0.0625rem solid $subtle-borders;
+	border-bottom: 0.0625rem solid $subtle-borders;
+	text-align: center;
+	padding: 2rem 0;
+
+	* {
+		font-style: italic;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4 {
+		font-weight: 400;
+	}
+
+	p {
+		font-weight: 300;
+	}
 }
 
 hr {
-  display: block;
-  height: 0.0625rem;
-  border: 0;
-  border-top: 0.0625rem solid rgba(170, 170, 170, 0.5);
-  margin: 2rem;
-  padding: 0;
+	display: block;
+	height: 0.0625rem;
+	border: 0;
+	border-top: 0.0625rem solid rgba(170, 170, 170, 0.5);
+	margin: 2rem;
+	padding: 0;
 }
 
 .text-center {
-  text-align: center !important;
+	text-align: center !important;
 }
 
 .text-left {
-  text-align: left !important;
+	text-align: left !important;
 }
 
 .text-right {
-  text-align: right !important;
+	text-align: right !important;
 }
 
 .bold {
-  font-weight: 700;
+	font-weight: 700;
 }
 
 .underline {
-  text-decoration: underline;
+	text-decoration: underline;
 }
 
 $thin-weight: 400;
 .thin {
-  font-weight: $thin-weight;
+	font-weight: $thin-weight;
 }
 
 .thin-text *:not(b):not(strong) {
-  font-weight: $thin-weight;
+	font-weight: $thin-weight;
 }
 
 .uppercase {
-  text-transform: uppercase;
+	text-transform: uppercase;
 }
 
 @each $color-name, $color in $auto-colors {
-  .text-#{"" + $color-name},
-  .text-#{"" + $color-name} * {
-    color: #{$color};
-    
-    path,
-    svg path {
-      fill: #{$color} !important;
-    }
-  }
+	.text-#{'' + $color-name},
+	.text-#{'' + $color-name} * {
+		color: #{$color};
+
+		path,
+		svg path {
+			fill: #{$color} !important;
+		}
+	}
 }

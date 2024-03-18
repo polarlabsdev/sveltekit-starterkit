@@ -26,6 +26,14 @@ module.exports = {
 			parserOptions: {
 				parser: '@typescript-eslint/parser'
 			}
+		},
+		// https://typescript-eslint.io/troubleshooting/#i-get-errors-from-the-no-undef-rule-about-global-variables-not-being-defined-even-though-there-are-no-typescript-errors
+		// Without this override built in DOM types fail eslint as "undefined"
+		{
+			files: ['*.ts', '*.mts', '*.cts', '*.tsx', '*.svelte'],
+			rules: {
+				'no-undef': 'off'
+			}
 		}
 	]
 };

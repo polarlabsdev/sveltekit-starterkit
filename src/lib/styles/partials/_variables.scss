@@ -48,16 +48,16 @@ $tertiary: $orange-default;
 
 // these are used to generate classes like "background-x" for general use
 $auto-colors: (
-  surface-default: $surface,
-  surface-alt: $surface-alt,
-  dark: $dark-grey,
-  darker: $dark,
-  grey: $grey,
-  light-grey: $light-grey,
-  primary: $primary,
-  secondary: $secondary,
-  tertiary: $tertiary,
-  white: $white,
+	surface-default: $surface,
+	surface-alt: $surface-alt,
+	dark: $dark-grey,
+	darker: $dark,
+	grey: $grey,
+	light-grey: $light-grey,
+	primary: $primary,
+	secondary: $secondary,
+	tertiary: $tertiary,
+	white: $white
 );
 
 // GRID VARIABLES

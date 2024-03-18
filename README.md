@@ -62,6 +62,7 @@ There are several important concepts behind this system:
 - Common utility classes
 
 ### The grid
+
 The grid is a throwback to the old 12 column 960/bootstrap grid but using flexbox to power it instead of float like the olden days. The concept is simple:
 
 - Wrap everything inside a `.row` class (DO NOT FORGET THIS OR THINGS GUNNA BE BROKE)
@@ -92,6 +93,7 @@ There are also lots of fun utility classes, like `between-sm` which you can put 
 For a (mostly) full overview of the available options check out http://flexboxgrid.com/. In the future we'd like to fork this website and open source fully the scss version of the grid with the extra goodies we've addded such as our vertical stretch options you can see in `src/lib/styles/partials/_flexgrid.scss`.
 
 ### Proper usage of rem units
+
 This unit simply put, is the font-size of the `<html></html>` tag multiplied by the rem unit. For example, the default font size is 16px. If I set a width of 2rem, the browser will compute the width to be 32px.
 
 Why do this? Because if you're consistent with it, **you can scale your entire website from a single location.**
@@ -101,6 +103,7 @@ If you look at `src/lib/styles/partials/_typography.scss` you'll see a number of
 There is [a handy vscode extension](https://marketplace.visualstudio.com/items?itemName=sainoba.px-to-rem) to help you convert back and forth from px. In practise, you can use px on your laptop screen (which is likely set to 16px in common.scss) then just swap all the px values when you're done.
 
 ### Proper usage of scss variables
+
 Take a look at `src/lib/styles/partials/_variables.scss` and notice how all the site colours and screen sizes can be found there. And some even alias each other! The idea is that you can set all of your colours here and use them programmatically (almost like JS even, except remember sass is a preprocessor).
 
 With some planning ahead, you can do the following:
@@ -108,26 +111,25 @@ With some planning ahead, you can do the following:
 - Control all the colours of your website from a single place
 - Control all the various styling elements from a single place, such as border radius or website margins
 - Create auto-generated utility classes (see ~line 85 of `src/lib/styles/partials/_common.scss`)
-- Control the sizes of your breakpoints*
+- Control the sizes of your breakpoints\*
 
 Take advantage of this! Anywhere you would use a constant in JS, you should use a sass variable here.
 
-\* -> NOTE: In the current version of the site you *can* set your screen sizes here, but to update the grid you must also swap the `$breakpoints` variable in `src/lib/styles/partials/_flexgrid.scss`. There might be other places as well such as `src/lib/components/ResponsiveHelper.svelte`. In the future we will figure out a better way to handle this.
-
+\* -> NOTE: In the current version of the site you _can_ set your screen sizes here, but to update the grid you must also swap the `$breakpoints` variable in `src/lib/styles/partials/_flexgrid.scss`. There might be other places as well such as `src/lib/components/ResponsiveHelper.svelte`. In the future we will figure out a better way to handle this.
 
 ### Semantic typography
+
 Our intention here is to stick as close to semantic HTML as possible. It's better for SEO, it's better for readability, it's better for you. In `src/lib/styles/partials/_typography.scss` we define the sizes and styles of all the HTML tags you might use for fonts from h1 -> p. Then when you're writing code, you can simply use the tag that you would expect to use. If you are writing font styles directly in page CSS, you should have a very good reason to be breaking the style guide.
 
 You'll also notice we generate more utility classes to easily apply colours from the variables.scss file to your fonts right from the HTML.
 
-
 ### Common utility classes
+
 The ultimate goal of this thinking is to write as little page specific CSS as possible. You can't get around certain unique aspects of your pages needing custom styling, but if you can think abstractly and break your site elements down essentially into lego pieces, you can construct your website quickly and easily and change the entire site from a single place.
 
 This framework functions best when you really take to heart the power and role of CSS in your website. For example, don't animate things by changing their values with JS. Create classes like `.open` and `.closed` and simply add and remove those classes from an element using JS. And if you can get abstract enough, you can reuse those classes across different parts of your website.
 
 The major difference between this and a library like Tailwind is that this way provides you a strong ability to customize your framework and take advantage of the many powerful features of CSS like tag selectors or CSS animations. It does require you to be strict to your own rules, but it also allows you to set your own rules.
-
 
 ## Preprocessing
 
@@ -138,14 +140,12 @@ All preprocessing can be found in these two files:
 
 Though there is also a `postcss.config.js` which contains the config to run autoprefixer for the CSS. There is also some added parts to the scss section of `svelte-preprocess` which allow us to prepend our variables and mixins to page styles.
 
-
 ## Testing
 
 > TODO
 > For now recommending this: https://playwright.dev/docs/codegen#generate-tests-in-vs-code
 > only catch is that for some reason vscode doesn't start the server? So you have to have
 > your own dev server running then remote the url from the resulting test file.
-
 
 ## Useful Resources
 
