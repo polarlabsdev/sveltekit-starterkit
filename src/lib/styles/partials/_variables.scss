@@ -1,0 +1,75 @@
+// APPLICATION VARIABLES
+// ---------------------
+
+// COLOUR VARIABLES
+// ---------------------
+// Base Colours:
+$blue-black: #083c52;
+$blue-dark: #0175a7;
+$blue-default: #0ab4fd;
+$blue-light: #8bdbfe;
+$grey-0: #f9fbfc;
+$grey-100: #e5e9eb;
+$grey-200: #cbd4d7;
+$grey-300: #aebcc1;
+$grey-400: #94a6ad;
+$grey-50: #f1f3f4;
+$grey-500: #7a9099;
+$grey-600: #5f747c;
+$grey-700: #47565c;
+$grey-800: #313b40;
+$grey-900: #1f2629;
+$grey-950: #0b0d0e;
+$orange-dark: #da990b;
+$orange-default: #f4b329;
+$orange-light: #f9d381;
+$teal-dark: #25b7ad;
+$teal-default: #5bd8d0;
+$teal-light: #d3f8f5;
+
+// Aliased Colours
+$surface: $grey-0;
+$surface-alt: $grey-50;
+$body-text: $grey-600;
+$borders: $grey-200;
+$dark: $grey-800;
+$dark-borders: $grey-700;
+$dark-blue: $blue-black;
+$dark-grey: $grey-700;
+$grey: $grey-500;
+$white: $grey-0;
+$headers: $grey-800;
+$light-grey: $grey-200;
+$negative-text: $white;
+$primary: $blue-default;
+$secondary: $teal-dark;
+$subtle-borders: $grey-200;
+$tertiary: $orange-default;
+
+// these are used to generate classes like "background-x" for general use
+$auto-colors: (
+  surface-default: $surface,
+  surface-alt: $surface-alt,
+  dark: $dark-grey,
+  darker: $dark,
+  grey: $grey,
+  light-grey: $light-grey,
+  primary: $primary,
+  secondary: $secondary,
+  tertiary: $tertiary,
+  white: $white,
+);
+
+// GRID VARIABLES
+// ---------------------
+$gutter-width: 1rem;
+$outer-margin: 2rem;
+$content-margin: 75rem;
+
+// use em for screen sizes because https://zellwk.com/blog/media-query-units/
+$xs-screen: 36.25em; // 580px
+$sm-screen: 48em; // 768px
+$md-screen: 64em; // 1024px
+$lg-screen: 100em; // 1600px
+$xl-screen: 120em; // 1920px
+$xxl-screen: 156.25em; // 2500px

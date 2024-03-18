@@ -1,8 +1,18 @@
-image: node:20-bookworm
+image: node:20-bookworm-slim
 
 pipelines:
   branches:
     main:
+      # run tests before deploy to ensure we still good after merging back
+      # with everything else.
+      - step:
+          name: Run Tests
+          caches:
+            - node
+          script:
+            - npm install
+            - npx -y playwright@1.42.1 install --with-deps
+            - npm run test:ci
       - step:
           name: Upload image to Digital Ocean
           script:
@@ -16,18 +26,14 @@ pipelines:
 
   pull-requests:
     '**':
+      # For now we should just test here and other necessary blocking things.
+      # Linting, prettifying, etc can be done with husky on our own machines.
+      # Saves bitbucket pipeline minutes.
       - step:
-          name: Test
+          name: Run Tests
           caches:
             - node
           script:
             - npm install
-            - npx -y playwright@1.41.1 install --with-deps
-            - npm test
-      - step:
-          name: Code linting
-          script:
-            - npm install eslint
-            - npx eslint .
-          caches:
-            - node
+            - npx -y playwright@1.42.1 install --with-deps
+            - npm run test:ci

@@ -1,7 +1,5 @@
-<script>
-	import Counter from './Counter.svelte';
-	import welcome from '$lib/images/svelte-welcome.webp';
-	import welcome_fallback from '$lib/images/svelte-welcome.png';
+<script lang="ts">
+	import ResponsiveHelper from "$lib/components/ResponsiveHelper.svelte";
 </script>
 
 <svelte:head>
@@ -10,50 +8,46 @@
 </svelte:head>
 
 <section>
-	<h1>
-		<span class="welcome">
-			<picture>
-				<source srcset={welcome} type="image/webp" />
-				<img src={welcome_fallback} alt="Welcome" />
-			</picture>
-		</span>
+	<div class="margin">
+		<ResponsiveHelper />
 
-		to your new<br />SvelteKit app
-	</h1>
+		<h1>Some Header</h1>
+		<h2>Some Header</h2>
+		<h3>Some Header</h3>
+		<h4>Some Header</h4>
+		<h5>Some Header</h5>
 
-	<h2>
-		try editing <strong>src/routes/+page.svelte</strong>
-	</h2>
+		<blockquote>This is a wonderful quote</blockquote>
 
-	<Counter />
+		<p>Some <a href="#" class="bold uppercase">text</a> to demo some font sizes for paragraphs</p>
+		<p class="caption text-secondary">Some text to demo some font sizes for paragraphs</p>
+		<p class="footnote">Some text to demo some font sizes for paragraphs</p>
+
+		<hr>
+
+		<div class="row">
+
+			<div class="col-xxs-12 col-sm-6 col-md-4 col-lg-3 col-xxl-2">
+				<div class="box background-primary"></div>
+			</div>
+
+			<div class="col-xxs-12 col-sm-6 col-md-4 col-lg-3 col-xxl-2">
+				<p>Some text to describe the image</p>
+			</div>
+
+		</div>
+	</div>
 </section>
 
-<style>
-	section {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		flex: 0.6;
-	}
-
-	h1 {
+<style lang="scss">
+	.box {
 		width: 100%;
-	}
+		height: 5rem;
+		margin: 5px 0;
+		transition: all 0.3s ease;
 
-	.welcome {
-		display: block;
-		position: relative;
-		width: 100%;
-		height: 0;
-		padding: 0 0 calc(100% * 495 / 2048) 0;
-	}
-
-	.welcome img {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		display: block;
+		&:hover {
+			background: $secondary;
+		}
 	}
 </style>
