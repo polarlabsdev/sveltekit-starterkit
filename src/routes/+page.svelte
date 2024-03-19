@@ -1,5 +1,9 @@
 <script lang="ts">
 	import ResponsiveHelper from '$lib/components/ResponsiveHelper.svelte';
+	import type { PageData } from './$types';
+	import { PUBLIC_TEST_KEY } from '$env/static/public';
+
+	export let data: PageData;
 </script>
 
 <svelte:head>
@@ -11,13 +15,16 @@
 	<div class="margin">
 		<ResponsiveHelper />
 
-		<h1>Some Header</h1>
-		<h2>Some Header</h2>
-		<h3>Some Header</h3>
-		<h4>Some Header</h4>
-		<h5>Some Header</h5>
+		<h1>{data.page.title}</h1>
+		<h2>{data.page.title}</h2>
+		<h3>{data.page.title}</h3>
+		<h4>{data.page.title}</h4>
+		<h5>{data.page.title}</h5>
 
-		<blockquote>This is a wonderful quote</blockquote>
+		<blockquote>
+			"This is a wonderful quote showing the value of the test public key:
+			<strong>{PUBLIC_TEST_KEY}</strong>"
+		</blockquote>
 
 		<p>Some <a href="." class="bold uppercase">text</a> to demo some font sizes for paragraphs</p>
 		<p class="caption text-secondary">Some text to demo some font sizes for paragraphs</p>

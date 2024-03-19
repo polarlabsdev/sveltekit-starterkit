@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# When using this script make sure that the env vars used in this script are available
+# in the environment where you are running the script. You should also run this script
+# from the root of the project. It's primary purpose is for CI/CD to convert bitbucket
+# secrets into a shippable .env file.
+
+rm .env
+touch .env
+
+# This snippet will include a default if the variable is unset: ${VARIABLE:-default}
+# We should try to include a default for all of the variables so tests can be run in
+# pipelines without worry about having to remember to set dummy values in repo vars.
+echo "SECRET_TEST_KEY=${SECRET_TEST_KEY:-secret}" >> .env
+echo "PUBLIC_TEST_KEY=${PUBLIC_TEST_KEY:-public}" >> .env

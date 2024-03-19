@@ -49,5 +49,8 @@
 		"defaults",
 		"last 4 versions",
 		"Firefox ESR"
-	]
+	],
+	"dependencies": {
+		"dotenv": "^16.4.5"
+	}
 }
