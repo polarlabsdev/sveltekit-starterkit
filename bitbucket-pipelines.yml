@@ -26,9 +26,9 @@ pipelines:
                 script:
                   - bin/generate-env
                   - export BITBUCKET_COMMIT_SHORT=$(echo $BITBUCKET_COMMIT | cut -c1-7)
-                  - export IMAGE_NAME=registry.digitalocean.com/polar-labs-registry/polarlabs_homepage:$BITBUCKET_COMMIT_SHORT
+                  - export IMAGE_NAME=$IMAGE_TAG_NAME:$BITBUCKET_COMMIT_SHORT
                   - docker build -t $IMAGE_NAME .
-                  - docker login registry.digitalocean.com -u $CONTAINER_REGISTRY_USERNAME -p $CONTAINER_REGISTRY_PASSWORD
+                  - docker login $CONTAINER_REGISTRY_HOST -u $CONTAINER_REGISTRY_USERNAME -p $CONTAINER_REGISTRY_PASSWORD
                   - docker push $IMAGE_NAME
                 services:
                   - docker

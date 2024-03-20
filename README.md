@@ -10,9 +10,9 @@ This repo contains the barebones of a sveltekit 4.2 app. We have made the follow
 - We chose to use [svelte-preprocess](https://github.com/sveltejs/svelte-preprocess) as it allows us to use external files and global css out of the box
 - We chose to use a custom SCSS framework based on a customized [flexboxgrid](http://flexboxgrid.com/) that has been updated to use Sass and integrate into a greater custom framework. This is a starterkit for those strong in CSS, though you could swap things out pretty easily for something like TailwindCSS
 - We use autoprefixer to handle brower compatibility (so you could just add tailwind to the postcss plugins)
-- We included a dockerfile that can be deployed verbatim to kubernetes (TODO)
+- We included a dockerfile that can be deployed verbatim to kubernetes
 - We included our standard helm template for deploying to kubernetes (TODO)
-- We included a bitbucket pipelines file we use ourselves that manages the deployment to kubernetes. It should be trivial to convert this to your own CI/CD service (TODO)
+- We included a bitbucket pipelines file we use ourselves that manages the deployment to kubernetes. It should be trivial to convert this to your own CI/CD service
 
 The intention is that (especially if you agree with our choices) this repo provides a starterkit that you can simply point to your own kubernetes and start writing code - no "beginning of the project" boilerplate needed!
 
@@ -43,7 +43,42 @@ You can preview the production build with `npm run preview`.
 
 ## Deployment
 
-> TODO
+This repo comes with a working Dockerfile that you can simply build and deploy. It uses node v20 and uses a builder image which copies into a deployable image which keeps the final size small since most of svelte is preprocessors we can remove for the deployable image.
+
+**Before you build any docker images though, make sure you generate a `.env` file in the root!** There is an example in the repo if you'd like to run it manually, as well as a script for CI/CD in the `bin/` folder that will convert env vars in your machine to a .env file.
+
+We use the node-adapter for sveltekit with the barest setup accepting most of their defaults. **This means the only thing you need to do to build is pass ORIGIN (the domain your site will be accessed from) as a build-arg.** The app will then run on port 3000. Here is an example build command and docker-compose:
+
+```
+docker build -t your-built-image:1.0.0 --build-arg origin=https://yourdomain.com:3000 .
+
+version: "3.8"
+services:
+  your-website:
+    image: your-built-image:latest
+    container_name: your-website
+    ports:
+      - 3000:3000
+    restart: unless-stopped
+```
+
+> **Note:** We deploy this container using our helm template _(link to be added once it's online)_ so in our docker image we don't use nginx reverse-proxies or anything like that. It's up to you how you would like to deploy.
+
+### CI/CD
+
+We include our bitbucket pipelines file as a reference for how to deploy this container in an automated fashion. We use the github branch model and aim for quick deploys over complicated release models. Our flow looks like this:
+
+- Pull Requests
+  - On every pull request run tests. We set branch restrictions in our repo to only allow merges to main, and only after the pipeline passes
+  - We will likely use kubernetes in the future to deploy preview environments with a manual trigger instead of keeping a dedicated staging env alive
+  - We do all our linting/formatting with husky (included in this repo) to keep our build minutes low
+- Merge to Main
+  - Run all the tests again to make sure everything still jives with the existing code before we deploy it
+  - On manual trigger, build the docker image, upload to a private registry, deploy to kubernetes (TODO)
+
+Keeping our process simple means we can rapidly deploy updates without having to worry about named branches, release branches, or hotfix merges back to develop. In our eyes, all code should be complete and passing tests before it goes to main, and if that's true it can go to prod.
+
+> **Note:** Make sure you set the pipeline variables/secrets in the file!
 
 ## How to use the included SCSS Framework
 
@@ -142,10 +177,9 @@ Though there is also a `postcss.config.js` which contains the config to run auto
 
 ## Testing
 
-> TODO
-> For now recommending this: https://playwright.dev/docs/codegen#generate-tests-in-vs-code
-> only catch is that for some reason vscode doesn't start the server? So you have to have
-> your own dev server running then remote the url from the resulting test file.
+Testing is done with vitests for unit tests and playwright for integration tests. These come default with sveltekit.
+
+We recommend using this: https://playwright.dev/docs/codegen#generate-tests-in-vs-code to easily write tests in the browser. The only catch is that for some reason vscode doesn't start the server, so you have to have your own dev server running then remove the url from the resulting test file.
 
 ## Useful Resources
 
