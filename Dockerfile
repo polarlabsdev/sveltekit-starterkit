@@ -6,14 +6,8 @@ RUN mkdir -p /app
 WORKDIR /app
 COPY . .
 
-# https://kit.svelte.dev/docs/adapter-node#environment-variables-origin-protocolheader-hostheader-and-port-header
-ARG ORIGIN=http://localhost:3000
-
 # Install with clean env
 RUN npm ci
-
-# Build while injecting env vars (because apparently svelte doesn't do that for prod builds??)
-ENV ORIGIN=${ORIGIN}
 RUN npm run build
 
 # Remove non dev dependencies from node_modules so we can copy them into the deploy
@@ -36,11 +30,10 @@ WORKDIR /app
 COPY --from=builder --chown=node:node /app/build build/
 COPY --from=builder --chown=node:node /app/node_modules node_modules/
 COPY package.json .
-COPY .env .
 
 # Set the env and ports
 EXPOSE 3000
 ENV NODE_ENV=production
 
-# do the thing!
+# Run while injecting env vars with dotenv (because apparently svelte doesn't do that for prod builds??)
 CMD ["node", "-r", "dotenv/config", "build/index.js"]

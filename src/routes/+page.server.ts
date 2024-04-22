@@ -1,8 +1,8 @@
 import type { PageServerLoad } from './$types';
-import { SECRET_TEST_KEY } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 
 export const load: PageServerLoad = async () => {
-	console.log(SECRET_TEST_KEY);
+	console.log(env.SECRET_TEST_KEY);
 
 	return {
 		page: {

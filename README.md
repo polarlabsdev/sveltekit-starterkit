@@ -45,24 +45,25 @@ You can preview the production build with `npm run preview`.
 
 This repo comes with a working Dockerfile that you can simply build and deploy. It uses node v20 and uses a builder image which copies into a deployable image which keeps the final size small since most of svelte is preprocessors we can remove for the deployable image.
 
-**Before you build any docker images though, make sure you generate a `.env` file in the root!** There is an example in the repo if you'd like to run it manually, as well as a script for CI/CD in the `bin/` folder that will convert env vars in your machine to a .env file.
+**Before you build any docker images though, make sure you generate a `.env` file in the root!** When we deploy we rely on environment variables set in Kubernetes, but for local development you can take the variables names from `envVars` and `secrets` in `web_chart/values.yaml` and put them in your `.env`.
 
-We use the node-adapter for sveltekit with the barest setup accepting most of their defaults. **This means the only thing you need to do to build is pass ORIGIN (the domain your site will be accessed from) as a build-arg.** The app will then run on port 3000. Here is an example build command and docker-compose:
+We use the node-adapter for sveltekit with the barest setup accepting most of their defaults. **This means the only thing you need to do to build is set the ORIGIN env var (the domain your site will be accessed from) along with any other necessary app env vars.** The app will then run on port 3000. Here is an example build command and docker-compose:
 
 ```
-docker build -t your-built-image:1.0.0 --build-arg origin=https://yourdomain.com:3000 .
+docker build -t your-built-image:1.0.0 .
 
 version: "3.8"
 services:
   your-website:
     image: your-built-image:latest
     container_name: your-website
+    env_file: .env
     ports:
       - 3000:3000
     restart: unless-stopped
 ```
 
-> **Note:** We deploy this container using our helm template _(link to be added once it's online)_ so in our docker image we don't use nginx reverse-proxies or anything like that. It's up to you how you would like to deploy.
+> **Note:** We deploy this container using our helm template you can see in `web_chart/Chart.yaml` so in our docker image we don't use nginx reverse-proxies or anything like that. It's up to you how you would like to deploy.
 
 ### CI/CD
 
@@ -74,11 +75,11 @@ We include our bitbucket pipelines file as a reference for how to deploy this co
   - We do all our linting/formatting with husky (included in this repo) to keep our build minutes low
 - Merge to Main
   - Run all the tests again to make sure everything still jives with the existing code before we deploy it
-  - On manual trigger, build the docker image, upload to a private registry, deploy to kubernetes (TODO)
+  - On manual trigger, build the docker image, upload to a private registry, deploy to kubernetes with the Polar Labs helm chart.
 
 Keeping our process simple means we can rapidly deploy updates without having to worry about named branches, release branches, or hotfix merges back to develop. In our eyes, all code should be complete and passing tests before it goes to main, and if that's true it can go to prod.
 
-> **Note:** Make sure you set the pipeline variables/secrets in the file!
+> **Note:** Make sure you set the pipeline variables/secrets from the file in the CI runner!
 
 ## How to use the included SCSS Framework
 

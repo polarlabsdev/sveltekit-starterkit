@@ -1,7 +1,7 @@
 <script lang="ts">
 	import ResponsiveHelper from '$lib/components/ResponsiveHelper.svelte';
 	import type { PageData } from './$types';
-	import { PUBLIC_TEST_KEY } from '$env/static/public';
+	import { env } from '$env/dynamic/public';
 
 	export let data: PageData;
 </script>
@@ -23,7 +23,7 @@
 
 		<blockquote>
 			"This is a wonderful quote showing the value of the test public key:
-			<strong>{PUBLIC_TEST_KEY}</strong>"
+			<strong>{env.PUBLIC_TEST_KEY}</strong>"
 		</blockquote>
 
 		<p>Some <a href="." class="bold uppercase">text</a> to demo some font sizes for paragraphs</p>
