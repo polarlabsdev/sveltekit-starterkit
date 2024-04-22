@@ -56,7 +56,7 @@ pipelines:
             - step:
                 name: Set Environment Namespace
                 script:
-                  - echo "export NAMESPACE_SUFFIX=preview-$BITBUCKET_PR_ID" >> set_env.sh
+                  - echo "export NAMESPACE_SUFFIX=production" >> set_env.sh
                   - echo "export FULL_DOMAIN=$DOMAIN" >> set_env.sh
                 artifacts:
                   - set_env.sh
@@ -69,11 +69,11 @@ pipelines:
       # For now we should just test here and other necessary blocking things.
       # Linting, prettifying, etc can be done with husky on our own machines.
       # Saves bitbucket pipeline minutes.
-      # - step: *run-tests
+      - step: *run-tests
       - stage:
           name: Deploy Preview Environment
           deployment: preview
-          # trigger: manual
+          trigger: manual
           steps:
             - step:
                 name: Set Environment Namespace
