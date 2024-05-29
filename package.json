@@ -51,6 +51,9 @@
 		"Firefox ESR"
 	],
 	"dependencies": {
-		"dotenv": "^16.4.5"
+		"@square/svelte-store": "^1.0.18",
+		"dotenv": "^16.4.5",
+		"isomorphic-dompurify": "^2.9.0",
+		"remixicon": "^4.2.0"
 	}
 }

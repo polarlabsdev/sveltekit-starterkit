@@ -6,6 +6,7 @@
 --------------------------------------------------------------*/
 @import './partials/normalize';
 @import './partials/flexgrid';
+@import './partials/fonts';
 
 /*--------------------------------------------------------------
 # General Styles
@@ -22,3 +23,5 @@
 // nothing complicated with all full powers of CSS.
 @import './partials/common';
 @import './partials/typography';
+@import './partials/buttons';
+@import './partials/forms';

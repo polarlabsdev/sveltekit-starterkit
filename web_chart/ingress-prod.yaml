@@ -1,0 +1,13 @@
+# on prod we control DNS ourselves because external-dns is finicky
+disableExternalDNS: true
+hosts:
+  - domainName: ${FULL_DOMAIN}
+    ingressPaths:
+      - path: /
+        type: Prefix
+        servicePort: 80
+  - domainName: www.${FULL_DOMAIN}
+    ingressPaths:
+      - path: /
+        type: Prefix
+        servicePort: 80

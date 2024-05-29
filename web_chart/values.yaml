@@ -8,8 +8,10 @@ containerPorts:
     port: 80
     targetPort: 3000
 envVars:
-  PUBLIC_TEST_KEY: public
   ORIGIN: https://${FULL_DOMAIN}
+  IS_PREVIEW: ${IS_PREVIEW}
+  PUBLIC_API_URL: ${PUBLIC_API_URL}
+  NODE_TLS_REJECT_UNAUTHORIZED: ${NODE_TLS_REJECT_UNAUTHORIZED}
 
 secrets:
   - name: test-secrets
@@ -18,9 +20,5 @@ secrets:
       SECRET_TEST_KEY: secret
 
 clusterIssuerName: ${CLUSTER_ISSUER}
-domainName: ${FULL_DOMAIN}
 tlsSecretName: tls-${APP_NAME}-${NAMESPACE_SUFFIX}
-ingressPaths:
-  - path: /
-    type: Prefix
-    servicePort: 80
+# ingress values are added below here during deploy pipeline

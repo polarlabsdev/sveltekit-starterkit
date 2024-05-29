@@ -182,6 +182,12 @@ Testing is done with vitests for unit tests and playwright for integration tests
 
 We recommend using this: https://playwright.dev/docs/codegen#generate-tests-in-vs-code to easily write tests in the browser. The only catch is that for some reason vscode doesn't start the server, so you have to have your own dev server running then remove the url from the resulting test file.
 
+## Tips
+
+- Understanding reactivity in svelte is a bit of a learning curve but necessary to make things work the way you expect. If you are coming from React you might expect everything to auto rebuild for you, but Svelte you **must** declare what you want to be reactive with `$: your code`. This includes even things coming from page load. Read the docs!
+- Understanding how page load works in svelte is also a bit of a learning curve but necessary knowledge. Know the difference between page.ts and page.server.ts and when to use either. Understand that things that load in your page load function **will** delay pages from loading which can be an awkward delay and it's not clear how to mitigate this without a bunch of research. This blog post covers how to make your data stream in so you don't block page load: https://geoffrich.net/posts/conditionally-stream-data/ but it's important to remember that streamed data won't be crawled by SEO bots (mostly anyways, apparently google is smarter these days)! So we recommend the trick at the end of the article with the "isDataRequest". Also, [you don't need to nest the promises anymore](https://kit.svelte.dev/docs/migrating-to-sveltekit-2#top-level-promises-are-no-longer-awaited).
+- When you go to deploy make sure you swap the favicons and instances of the polarlabs.ca domain!
+
 ## Useful Resources
 
 - [How Svelte Stores work (state management)](https://www.youtube.com/watch?v=L3uBfL-4dDM)

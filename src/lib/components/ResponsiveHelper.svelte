@@ -18,11 +18,11 @@
 			pageSize = 'xl-screen';
 		} else if (pageWidth >= 1600) {
 			pageSize = 'lg-screen';
-		} else if (pageWidth >= 1024) {
+		} else if (pageWidth >= 1150) {
 			pageSize = 'md-screen';
 		} else if (pageWidth >= 768) {
 			pageSize = 'sm-screen';
-		} else if (pageWidth >= 580) {
+		} else if (pageWidth >= 400) {
 			pageSize = 'xs-screen';
 		} else {
 			pageSize = 'xxs-screen';

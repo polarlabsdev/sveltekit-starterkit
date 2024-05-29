@@ -1,4 +1,5 @@
-<script>
+<script lang="ts">
+	import 'remixicon/fonts/remixicon.css';
 </script>
 
 <main>

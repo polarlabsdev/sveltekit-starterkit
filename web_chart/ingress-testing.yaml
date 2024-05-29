@@ -1,0 +1,6 @@
+hosts:
+  - domainName: ${FULL_DOMAIN}
+    ingressPaths:
+      - path: /
+        type: Prefix
+        servicePort: 80

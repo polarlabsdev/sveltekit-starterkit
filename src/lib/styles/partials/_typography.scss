@@ -1,8 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:ital,wght@300..700&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
-
-$header-font: 'Rubik', sans-serif;
-$body-font: 'Fira Code', monospace;
-
 html {
 	font-family: $body-font;
 	color: $grey;
@@ -18,10 +13,17 @@ html {
 	// there's a good reason not to. Rem units will scale based on the
 	// html font size, giving us a single place to easily adjust the
 	// scale of the entire website on different screen sizes.
-	font-size: 13px;
+	// To be clear, these ones should remain px!
+	font-size: 12px;
 
 	@media all and (min-width: $xs-screen) {
 		font-size: 15px;
+	}
+
+	// small screens are like tablets which are surpringly better suited to have
+	// a smaller rem multiplier
+	@media all and (min-width: $sm-screen) {
+		font-size: 13px;
 	}
 
 	@media all and (min-width: $md-screen) {
@@ -37,93 +39,172 @@ html {
 	}
 
 	@media all and (min-width: $xxl-screen) {
-		font-size: 22px;
+		font-size: 19px;
 	}
 }
 
 h1 {
 	font-family: $header-font;
-	font-size: 3rem;
+	font-size: 2.8rem;
 	color: $dark-grey;
 	font-weight: 700;
 	line-height: 120%;
-	margin: 0.75rem 0;
+	margin: $spacing-sm-3 0;
 }
 
 h2 {
 	font-family: $header-font;
-	font-size: 2.5rem;
+	font-size: 2.2rem;
 	color: $dark-grey;
 	font-weight: 700;
 	line-height: 120%;
-	margin: 0.75rem 0;
+	margin: $spacing-sm-3 0;
 }
 
 h3 {
 	font-family: $header-font;
-	font-size: 2.062rem;
+	font-size: 1.5rem;
 	color: $dark-grey;
 	font-weight: 600;
 	line-height: 120%;
-	margin: 0.625rem 0;
+	margin: $spacing-sm-2 0;
 }
 
 h4 {
 	font-family: $header-font;
-	font-size: 1.75rem;
+	font-size: 1.5rem;
 	color: $dark-grey;
-	font-weight: 500;
+	font-weight: 600;
 	line-height: 140%;
-	margin: 0.625rem 0;
+	margin: $spacing-sm-2 0;
+
+	@media screen and (min-width: $md-screen) {
+		font-size: 1.25rem;
+	}
 }
 
 h5 {
 	font-family: $header-font;
-	font-size: 1.438rem;
+	font-size: 1.15rem;
 	color: $dark-grey;
-	font-weight: 500;
+	font-weight: 600;
 	line-height: 140%;
-	margin: 0.625rem 0;
+	margin: $spacing-sm-2 0;
 }
 
 p,
-li {
+li,
+label {
 	font-family: $body-font;
 	font-size: 1rem;
 	color: $grey;
-	font-weight: 400;
-	margin: 0.5rem 0;
-	line-height: 150%;
+	font-weight: 500;
+	margin: $spacing-sm-3 0;
+	line-height: 160%;
+
+	@media screen and (min-width: $md-screen) {
+		font-size: 0.9rem;
+		line-height: 150%;
+	}
 }
 
-.lg-text {
+article p {
+	line-height: 175%;
+	margin: $spacing-md-3 0;
+}
+
+.lg-text,
+.lg-text * {
 	font-size: 1.125rem !important;
 }
 
-.caption {
-	font-size: 0.875rem !important;
+.caption,
+.caption * {
+	font-size: 1rem !important;
 	font-weight: 500;
 	line-height: 140%;
+
+	@media screen and (min-width: $md-screen) {
+		font-size: 0.825rem !important;
+	}
 }
 
-.footnote {
-	font-size: 0.688rem !important;
+.footnote,
+.footnote * {
+	font-size: 0.9rem !important;
 	font-weight: 500;
 	line-height: 140%;
+
+	@media screen and (min-width: $md-screen) {
+		font-size: 0.6875rem !important;
+	}
 }
 
 a {
+	text-decoration: none;
+	transition: all 0.2s ease;
+
+	&:hover {
+		color: $primary !important;
+	}
+
+	&.child-hovers {
+		&:hover * {
+			color: $primary;
+		}
+
+		& * {
+			transition: color 0.3s ease;
+		}
+	}
+
+	&.no-color {
+		color: inherit;
+	}
+}
+
+p a {
 	text-decoration: underline;
 	color: $primary;
-	transition: all 0.2s ease;
 
 	&:hover {
 		color: darken($primary, 15%) !important;
 	}
 }
 
-.no-underline {
+.icon-xs {
+	font-size: 0.75rem;
+}
+
+.icon-sm {
+	font-size: 1rem;
+}
+
+.icon-md {
+	font-size: 1.5rem;
+}
+
+.icon-lg {
+	font-size: 2rem;
+}
+
+.icon-xl {
+	font-size: 3rem;
+}
+
+.no-underline,
+.no-underline * {
 	text-decoration: none;
+}
+
+ul.inline {
+	margin: 0;
+	padding: 0;
+
+	li {
+		display: inline-block;
+		list-style-type: none;
+	}
 }
 
 blockquote {
@@ -131,7 +212,7 @@ blockquote {
 	border-top: 0.0625rem solid $subtle-borders;
 	border-bottom: 0.0625rem solid $subtle-borders;
 	text-align: center;
-	padding: 2rem 0;
+	padding: $spacing-xl 0;
 
 	* {
 		font-style: italic;
@@ -153,9 +234,33 @@ hr {
 	display: block;
 	height: 0.0625rem;
 	border: 0;
-	border-top: 0.0625rem solid rgba(170, 170, 170, 0.5);
-	margin: 2rem;
+	border-top: 0.0625rem solid $subtle-borders;
+	margin: $spacing-xl 0;
 	padding: 0;
+	position: relative;
+	overflow: visible;
+	z-index: 0;
+
+	&::before,
+	&::after {
+		content: '';
+		display: block;
+		width: 4px; // leave these px so they stay fixed in size
+		height: 4px;
+		background: $subtle-borders;
+		border-radius: 100%;
+		position: absolute;
+		top: 50%;
+		transform: translateY(-60%); // bump it up a bit since it sits a bit low for some reason
+	}
+
+	&::before {
+		left: 0;
+	}
+
+	&::after {
+		right: 0;
+	}
 }
 
 .text-center {
@@ -170,24 +275,29 @@ hr {
 	text-align: right !important;
 }
 
-.bold {
+.bold,
+.bold * {
 	font-weight: 700;
 }
 
-.underline {
+.medium,
+.medium * {
+	font-weight: 600;
+}
+
+.underline,
+.underline * {
 	text-decoration: underline;
 }
 
 $thin-weight: 400;
-.thin {
+.thin,
+.thin *:not(b):not(strong) {
 	font-weight: $thin-weight;
 }
 
-.thin-text *:not(b):not(strong) {
-	font-weight: $thin-weight;
-}
-
-.uppercase {
+.uppercase,
+.uppercase * {
 	text-transform: uppercase;
 }
 

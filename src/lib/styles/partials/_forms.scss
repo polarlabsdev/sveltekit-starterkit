@@ -1,0 +1,77 @@
+.input {
+	margin-bottom: $spacing-md-3;
+
+	label {
+		display: block;
+		margin: 0 0 $spacing-xs 0;
+	}
+
+	.input-container {
+		position: relative;
+
+		input,
+		select,
+		.toggleInput {
+			display: block;
+			padding: $spacing-sm-2;
+			border: 0.125rem solid $grey;
+			outline: none;
+			background: $white;
+			font-size: 0.875rem;
+			font-weight: 500;
+			font-family: $body-font;
+			width: 100%;
+			border-radius: $global-border-radius;
+			transition: all 0.3s ease;
+
+			&:focus,
+			&.active {
+				border-color: $primary;
+
+				& + i {
+					color: $primary;
+				}
+			}
+
+			&.active {
+				color: $primary;
+			}
+		}
+
+		select {
+			appearance: none;
+			user-select: none;
+		}
+
+		.toggleInput {
+			margin-bottom: $spacing-sm;
+			cursor: pointer;
+			user-select: none;
+			border-color: $grey;
+
+			@each $color-name, $color in $auto-colors {
+				&.#{'' + $color-name} {
+					&.active {
+						border-color: $color;
+						color: $color;
+
+						& + i {
+							color: $color;
+						}
+					}
+				}
+			}
+		}
+
+		i {
+			position: absolute;
+			top: 50%;
+			right: 0.875rem;
+			transform: translateY(-50%);
+			font-size: 1.25rem;
+			font-weight: 600;
+			color: $grey;
+			transition: all 0.3s ease;
+		}
+	}
+}

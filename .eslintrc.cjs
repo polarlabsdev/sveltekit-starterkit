@@ -32,7 +32,9 @@ module.exports = {
 		{
 			files: ['*.ts', '*.mts', '*.cts', '*.tsx', '*.svelte'],
 			rules: {
-				'no-undef': 'off'
+				'no-undef': 'off',
+				'svelte/valid-compile': ['error', { ignoreWarnings: true }],
+				'@typescript-eslint/no-explicit-any': 'off'
 			}
 		}
 	]

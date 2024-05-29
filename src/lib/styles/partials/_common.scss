@@ -11,7 +11,7 @@ body {
 }
 
 section {
-	padding: 5rem 0;
+	padding: 3.85rem 0;
 
 	&.padding-sm {
 		padding: 3.125rem 0;
@@ -32,6 +32,10 @@ section {
 
 .no-margin-bottom {
 	margin-bottom: 0px !important;
+}
+
+.nav-adjust {
+	margin-top: $nav-adjust;
 }
 
 .shadow {
@@ -56,6 +60,7 @@ section {
 }
 
 .clickable {
+	user-select: none;
 	cursor: pointer;
 	transition: all 0.3s ease;
 
@@ -71,8 +76,8 @@ section {
 	top: 0;
 	left: 0;
 	z-index: 3;
-	transition: all 0.3s ease-out;
-	background: $dark-grey;
+	transition: all 0.2s ease-out;
+	background: rgba($dark-grey, 0.6);
 
 	&.fill-parent {
 		position: absolute;
@@ -85,7 +90,19 @@ section {
 
 	@each $color-name, $color in $auto-colors {
 		&.#{'' + $color-name} {
-			background: rgba($color, 0.7);
+			background: rgba($color, 0.6);
 		}
+	}
+}
+
+.spin {
+	animation: spin 2s linear infinite;
+	display: inline-block;
+}
+
+@keyframes spin {
+	100% {
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
 	}
 }

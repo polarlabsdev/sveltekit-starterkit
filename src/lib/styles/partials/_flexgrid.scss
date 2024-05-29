@@ -12,21 +12,29 @@ $num-grid-columns: 12;
 
 .margin {
 	box-sizing: border-box;
-	width: 92%; // never touch sides on mobile
+	width: 88%; // never touch sides on mobile
 	max-width: $content-margin; // recommended to use rem to control scale from html font size
 	margin-left: auto;
 	margin-right: auto;
+
+	@media screen and (min-width: $xxl-screen) {
+		max-width: $xxl-content-margin;
+	}
+
+	&.article-margin {
+		width: 92%; // never touch sides on mobile
+		max-width: $article-margin !important;
+	}
 }
 
-// This is probably not necessary since our normalize script
-// makes everything border-box by default, and I suspect this
-// was to compensate for row negative margins pulling content
-// beyond the edges of a parent container. Leaving it here
-// as it was probably in the original lib for a reason under the
-// name .container-fluid
-.padded-container {
-	padding-right: $outer-margin;
-	padding-left: $outer-margin;
+// This is to compensate for row negative margins pulling content
+// beyond the edges of a parent container. It was in the original
+// lib under the name .container-fluid. You would use this in cases
+// like a child row is full width of the page and adding a horizontal
+// scroll bar, or messing up spacing inside some parent container.
+.row-container {
+	padding-right: abs($gutter-compensation);
+	padding-left: abs($gutter-compensation);
 }
 
 .row {
@@ -65,7 +73,8 @@ $breakpoints: (
 	md: $md-screen,
 	lg: $lg-screen,
 	xl: $xl-screen,
-	xxl: $xxl-screen
+	xxl: $xxl-screen,
+	4k: $fourk-screen
 );
 
 @mixin col-common {
@@ -145,7 +154,7 @@ $breakpoints: (
 
 	// SHOW/HIDE RULES SYNCED TO GRID
 	// ------------------------------
-	// all classes assume big to small screen.
+	// all classes assume small to big screen.
 	// hide-x means show by default and hide when you reach a screen size
 	// show-x means hide by default and show when you reach a screen size
 	.show-#{$size},
