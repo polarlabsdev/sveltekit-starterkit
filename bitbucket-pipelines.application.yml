@@ -1,0 +1,106 @@
+# This image is an official playwright image that already contains plawright deps,
+# speeds things up not having to install them every time!
+# NOTE: Make sure it matches the playwright version in package.json
+image: mcr.microsoft.com/playwright:v1.42.1-jammy
+
+# enable Docker for your repository
+options:
+  docker: true
+
+definitions:
+  steps:
+    - step: &run-tests
+        name: Run Vite & Playwright Tests
+        caches:
+          - node
+        script:
+          - npm install
+          - npm run test:ci
+
+    - step: &build-docker
+        name: Upload image to Digital Ocean
+        image: alpine/doctl:1.27.13 # comes with doctl, kubectl, and helm
+        script:
+          - doctl registry login --expiry-seconds 3600
+          - export IMAGE_NAME=$IMAGE_TAG_NAME:$BITBUCKET_COMMIT
+          - docker build -t $IMAGE_NAME $BITBUCKET_CLONE_DIR
+          - docker push $IMAGE_NAME
+        services:
+          - docker
+
+    - step: &helm-deploy
+        name: Deploy to Kubernetes
+        image: alpine/doctl:1.27.13
+        script:
+          - source set_env.sh
+          - export IMAGE_NAME=$IMAGE_TAG_NAME:$BITBUCKET_COMMIT # this is deterministic, so we can just set it again here
+          - doctl kubernetes cluster kubeconfig save $KUBE_CLUSTER_ID
+          - apk add gettext moreutils
+          - helm dependency update ./web_chart
+          - cat $INGRESS_VALUES >> web_chart/values.yaml
+          - envsubst < ./web_chart/values.yaml | sponge ./web_chart/values.yaml
+          - cat ./web_chart/values.yaml
+          # - helm install $APP_NAME-$NAMESPACE_SUFFIX ./web_chart --dry-run
+          - helm upgrade $APP_NAME-$NAMESPACE_SUFFIX ./web_chart --debug --install --force --timeout=120s
+
+pipelines:
+  branches:
+    main:
+      # run tests before deploy to ensure we still good after merging back
+      # with everything else.
+      - step: *run-tests
+      - stage:
+          name: Deploy to Production
+          deployment: production
+          trigger: manual
+          steps:
+            - step:
+                name: Configure Environment
+                script:
+                  - echo "export NAMESPACE_SUFFIX=production" >> set_env.sh
+                  - echo "export FULL_DOMAIN=$DOMAIN" >> set_env.sh
+                  - echo "export NODE_TLS_REJECT_UNAUTHORIZED=1" >> set_env.sh
+                  - echo "export INGRESS_VALUES=web_chart/ingress-prod.yaml" >> set_env.sh
+                  - echo "export IS_PREVIEW=false" >> set_env.sh
+                artifacts:
+                  - set_env.sh
+
+            - step: *build-docker
+            - step: *helm-deploy
+
+  pull-requests:
+    "**":
+      # For now we should just test here and other necessary blocking things.
+      # Linting, prettifying, etc can be done with husky on our own machines.
+      # Saves bitbucket pipeline minutes.
+      - step: *run-tests
+      - stage:
+          name: Deploy Preview Environment
+          deployment: preview
+          trigger: manual
+          steps:
+            - step:
+                name: Configure Environment
+                script:
+                  - echo "export NAMESPACE_SUFFIX=preview-$BITBUCKET_PR_ID" >> set_env.sh
+                  - echo "export FULL_DOMAIN=preview-$BITBUCKET_PR_ID-web.$DOMAIN" >> set_env.sh
+                  - echo "export NODE_TLS_REJECT_UNAUTHORIZED=0" >> set_env.sh
+                  - echo "export INGRESS_VALUES=web_chart/ingress-testing.yaml" >> set_env.sh
+                  - echo "export IS_PREVIEW=true" >> set_env.sh
+                artifacts:
+                  - set_env.sh
+
+            - step: *build-docker
+            - step: *helm-deploy
+
+  custom:
+    close-preview-environment: # name of this pipeline
+      - variables:
+          - name: BITBUCKET_PR_ID
+      - step:
+          name: Delete Preview Environment
+          image: alpine/doctl:1.27.13
+          script:
+            - export NAMESPACE_SUFFIX=preview-$BITBUCKET_PR_ID
+            - doctl kubernetes cluster kubeconfig save $KUBE_CLUSTER_ID
+            - helm uninstall $APP_NAME-$NAMESPACE_SUFFIX
