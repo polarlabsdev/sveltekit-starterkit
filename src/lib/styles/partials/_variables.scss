@@ -52,6 +52,9 @@ $orange-light: #f9d381;
 $teal-dark: #25b7ad;
 $teal-default: #5bd8d0;
 $teal-light: #d3f8f5;
+$red-dark: #c62828;
+$red-default: #ef5350;
+$red-light: #ef9a9a;
 
 // Aliased Colours
 $surface: $grey-0;
@@ -71,6 +74,7 @@ $primary: $blue-default;
 $secondary: $teal-dark;
 $subtle-borders: $grey-200;
 $tertiary: $orange-default;
+$red: $red-default;
 
 // these are used to generate classes like "background-x" for general use
 $auto-colors: (
@@ -84,7 +88,8 @@ $auto-colors: (
 	primary: $primary,
 	secondary: $secondary,
 	tertiary: $tertiary,
-	white: $white
+	white: $white,
+	red: $red
 );
 
 // GRID VARIABLES

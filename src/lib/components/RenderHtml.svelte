@@ -1,5 +1,6 @@
 <script lang="ts">
 	import DOMPurify from 'isomorphic-dompurify';
+
 	export let htmlString: string;
 </script>
 

@@ -5,6 +5,6 @@
 	transition: all 0.3s ease;
 
 	&:hover {
-		background: $secondary;
+		background: variables.$secondary;
 	}
 }

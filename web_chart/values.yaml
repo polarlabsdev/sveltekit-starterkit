@@ -1,4 +1,4 @@
-namespace: ${APP_NAME}-${NAMESPACE_SUFFIX}
+namespace: ${APP_NAME}-${ENV_NAME}
 appName: ${APP_NAME}
 replicas: ${POD_REPLICAS}
 imageLocation: ${IMAGE_NAME}
@@ -11,6 +11,9 @@ envVars:
   ORIGIN: https://${FULL_DOMAIN}
   IS_PREVIEW: ${IS_PREVIEW}
   PUBLIC_API_URL: ${PUBLIC_API_URL}
+  PUBLIC_SENTRY_DSN: ${SENTRY_DSN}
+  PUBLIC_SENTRY_RELEASE: ${SENTRY_RELEASE}
+  PUBLIC_ENV_NAME: ${ENV_NAME}
   NODE_TLS_REJECT_UNAUTHORIZED: ${NODE_TLS_REJECT_UNAUTHORIZED}
 
 secrets:
@@ -20,5 +23,5 @@ secrets:
       SECRET_TEST_KEY: secret
 
 clusterIssuerName: ${CLUSTER_ISSUER}
-tlsSecretName: tls-${APP_NAME}-${NAMESPACE_SUFFIX}
+tlsSecretName: tls-${APP_NAME}-${ENV_NAME}
 # ingress values are added below here during deploy pipeline

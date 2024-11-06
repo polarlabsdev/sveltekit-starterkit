@@ -3,3 +3,4 @@
 *.yml
 package-lock.json
 yarn.lock
+src/sitemap.ts

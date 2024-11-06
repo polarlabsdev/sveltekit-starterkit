@@ -1,7 +1,7 @@
 # This image is an official playwright image that already contains plawright deps,
 # speeds things up not having to install them every time!
 # NOTE: Make sure it matches the playwright version in package.json
-image: mcr.microsoft.com/playwright:v1.42.1-jammy
+image: mcr.microsoft.com/playwright:v1.48.1-jammy
 
 definitions:
   steps:

@@ -1,7 +1,7 @@
 # This image is an official playwright image that already contains plawright deps,
 # speeds things up not having to install them every time!
 # NOTE: Make sure it matches the playwright version in package.json
-image: mcr.microsoft.com/playwright:v1.42.1-jammy
+image: mcr.microsoft.com/playwright:v1.48.1-jammy
 
 # enable Docker for your repository
 options:
@@ -23,7 +23,7 @@ definitions:
         script:
           - doctl registry login --expiry-seconds 3600
           - export IMAGE_NAME=$IMAGE_TAG_NAME:$BITBUCKET_COMMIT
-          - docker build -t $IMAGE_NAME $BITBUCKET_CLONE_DIR
+          - docker build -t $IMAGE_NAME $BITBUCKET_CLONE_DIR --build-arg SENTRY_ORG=$SENTRY_ORG --build-arg SENTRY_PROJECT=$SENTRY_PROJECT
           - docker push $IMAGE_NAME
         services:
           - docker
@@ -40,8 +40,8 @@ definitions:
           - cat $INGRESS_VALUES >> web_chart/values.yaml
           - envsubst < ./web_chart/values.yaml | sponge ./web_chart/values.yaml
           - cat ./web_chart/values.yaml
-          # - helm install $APP_NAME-$NAMESPACE_SUFFIX ./web_chart --dry-run
-          - helm upgrade $APP_NAME-$NAMESPACE_SUFFIX ./web_chart --debug --install --force --timeout=120s
+          # - helm install $APP_NAME-$ENV_NAME ./web_chart --dry-run
+          - helm upgrade $APP_NAME-$ENV_NAME ./web_chart --debug --install --force --timeout=120s --wait
 
 pipelines:
   branches:
@@ -56,17 +56,31 @@ pipelines:
           steps:
             - step:
                 name: Configure Environment
+                image: getsentry/sentry-cli
                 script:
-                  - echo "export NAMESPACE_SUFFIX=production" >> set_env.sh
+                  - echo "export ENV_NAME=production" >> set_env.sh
                   - echo "export FULL_DOMAIN=$DOMAIN" >> set_env.sh
                   - echo "export NODE_TLS_REJECT_UNAUTHORIZED=1" >> set_env.sh
                   - echo "export INGRESS_VALUES=web_chart/ingress-prod.yaml" >> set_env.sh
-                  - echo "export IS_PREVIEW=false" >> set_env.sh
+                  # configure sentry release
+                  # SENTRY_AUTH_TOKEN, SENTRY_ORG, and SENTRY_PROJECT set in repository vars
+                  # propose-version assumes you're in a git repository
+                  - export SENTRY_RELEASE_NAME=$(sentry-cli releases propose-version)
+                  - sentry-cli releases new $SENTRY_RELEASE_NAME
+                  - sentry-cli releases set-commits --auto $SENTRY_RELEASE_NAME
+                  # add the env var to our set environment script for later deploy steps
+                  - echo "export SENTRY_RELEASE_NAME=$SENTRY_RELEASE_NAME" >> set_env.sh
                 artifacts:
                   - set_env.sh
 
             - step: *build-docker
             - step: *helm-deploy
+            - step:
+                name: Finalize Release
+                image: getsentry/sentry-cli
+                script:
+                  - source set_env.sh
+                  - sentry-cli releases finalize $SENTRY_RELEASE_NAME
 
   pull-requests:
     "**":
@@ -82,11 +96,10 @@ pipelines:
             - step:
                 name: Configure Environment
                 script:
-                  - echo "export NAMESPACE_SUFFIX=preview-$BITBUCKET_PR_ID" >> set_env.sh
+                  - echo "export ENV_NAME=preview-$BITBUCKET_PR_ID" >> set_env.sh
                   - echo "export FULL_DOMAIN=preview-$BITBUCKET_PR_ID-web.$DOMAIN" >> set_env.sh
                   - echo "export NODE_TLS_REJECT_UNAUTHORIZED=0" >> set_env.sh
                   - echo "export INGRESS_VALUES=web_chart/ingress-testing.yaml" >> set_env.sh
-                  - echo "export IS_PREVIEW=true" >> set_env.sh
                 artifacts:
                   - set_env.sh
 
@@ -101,6 +114,6 @@ pipelines:
           name: Delete Preview Environment
           image: alpine/doctl:1.27.13
           script:
-            - export NAMESPACE_SUFFIX=preview-$BITBUCKET_PR_ID
+            - export ENV_NAME=preview-$BITBUCKET_PR_ID
             - doctl kubernetes cluster kubeconfig save $KUBE_CLUSTER_ID
-            - helm uninstall $APP_NAME-$NAMESPACE_SUFFIX
+            - helm uninstall $APP_NAME-$ENV_NAME

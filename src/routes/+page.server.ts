@@ -15,6 +15,7 @@ export const load: PageServerLoad = async ({ fetch, isDataRequest }) => {
 const getPageData = async (fetch: SvelteFetch) => {
 	const { data, error } = await apiFetch<any>({
 		path: '/facts',
+		baseUrl: 'https://cat-fact.herokuapp.com',
 		svelteFetch: fetch
 	});
 

@@ -1,4 +1,5 @@
 @use 'sass:math';
+@use 'variables';
 
 // Doesn't seem like juice worth the sqeeuze at this point but I would like
 // to extract this lib at some point and open source it as I had to sort of
@@ -6,24 +7,24 @@
 // I can be the only one out there that still prefers these to "no CSS knowledge needed"
 // frameworks of today.
 
-$gutter-compensation: $gutter-width * 0.5 * -1;
-$half-gutter-width: $gutter-width * 0.5;
+$gutter-compensation: variables.$gutter-width * 0.5 * -1;
+$half-gutter-width: variables.$gutter-width * 0.5;
 $num-grid-columns: 12;
 
 .margin {
 	box-sizing: border-box;
 	width: 88%; // never touch sides on mobile
-	max-width: $content-margin; // recommended to use rem to control scale from html font size
+	max-width: variables.$content-margin; // recommended to use rem to control scale from html font size
 	margin-left: auto;
 	margin-right: auto;
 
-	@media screen and (min-width: $xxl-screen) {
-		max-width: $xxl-content-margin;
+	@media screen and (min-width: variables.$xxl-screen) {
+		max-width: variables.$xxl-content-margin;
 	}
 
 	&.article-margin {
 		width: 92%; // never touch sides on mobile
-		max-width: $article-margin !important;
+		max-width: variables.$article-margin !important;
 	}
 }
 
@@ -68,13 +69,13 @@ $num-grid-columns: 12;
 // and then at the next size screen we apply the new rules.
 $breakpoints: (
 	xxs: 0em,
-	xs: $xs-screen,
-	sm: $sm-screen,
-	md: $md-screen,
-	lg: $lg-screen,
-	xl: $xl-screen,
-	xxl: $xxl-screen,
-	4k: $fourk-screen
+	xs: variables.$xs-screen,
+	sm: variables.$sm-screen,
+	md: variables.$md-screen,
+	lg: variables.$lg-screen,
+	xl: variables.$xl-screen,
+	xxl: variables.$xxl-screen,
+	4k: variables.$fourk-screen
 );
 
 @mixin col-common {

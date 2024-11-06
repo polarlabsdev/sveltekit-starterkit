@@ -7,5 +7,5 @@
 </main>
 
 <style lang="scss" global>
-	@import '../lib/styles/global.scss';
+	@forward '../lib/styles/global.scss';
 </style>

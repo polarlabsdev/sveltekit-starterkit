@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { MouseEventHandler } from 'svelte/elements';
+
 	export let buttonText: string;
 	export let iconName: string = '';
 	export let iconOnly: boolean = false;
@@ -23,6 +24,7 @@
 		{#if iconName}
 			<i class={iconName}></i>
 		{/if}
+
 		{#if !iconOnly}
 			<span>{buttonText}</span>
 		{/if}

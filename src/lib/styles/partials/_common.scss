@@ -1,13 +1,16 @@
+@use 'variables';
+
 html,
 body {
 	// If you have any issues with scrollbar colours on certain
 	// browsers on windows you can uncomment the line below and
 	// colour the scrollbar yourself.
-	// scrollbar-color: lighten($surface-alt, 8%) darken($grey, 7%);
+	// but make sure to use the new syntax for lighten/darken color: color.adjust($color, $lightness: x%)
+	// scrollbar-color: lighten(variables.$surface-alt, 8%) darken(variables.$grey, 7%);
 }
 
 body {
-	background: $surface;
+	background: variables.$surface;
 }
 
 section {
@@ -35,11 +38,11 @@ section {
 }
 
 .nav-adjust {
-	margin-top: $nav-adjust;
+	margin-top: variables.$nav-adjust;
 }
 
 .shadow {
-	box-shadow: 0rem 0.1875rem 0.5rem 0.0625rem rgba($dark-grey, 0.18);
+	box-shadow: 0rem 0.1875rem 0.5rem 0.0625rem rgba(variables.$dark-grey, 0.18);
 }
 
 // hidden completely removes element from the DOM
@@ -53,7 +56,7 @@ section {
 	pointer-events: none;
 }
 
-@each $color-name, $color in $auto-colors {
+@each $color-name, $color in variables.$auto-colors {
 	.background-#{'' + $color-name} {
 		background: #{$color};
 	}
@@ -77,7 +80,7 @@ section {
 	left: 0;
 	z-index: 3;
 	transition: all 0.2s ease-out;
-	background: rgba($dark-grey, 0.6);
+	background: rgba(variables.$dark-grey, 0.6);
 
 	&.fill-parent {
 		position: absolute;
@@ -88,7 +91,7 @@ section {
 		z-index: -1;
 	}
 
-	@each $color-name, $color in $auto-colors {
+	@each $color-name, $color in variables.$auto-colors {
 		&.#{'' + $color-name} {
 			background: rgba($color, 0.6);
 		}

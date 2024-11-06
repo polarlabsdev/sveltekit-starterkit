@@ -6,7 +6,12 @@ RUN mkdir -p /app
 WORKDIR /app
 COPY . .
 
-# Install with clean env
+# Install with clean env except necessary build env vars (make sure to override these in your pipeline)
+ARG SENTRY_ORG=my_org
+ENV SENTRY_ORG=$SENTRY_ORG
+ARG SENTRY_PROJECT=my_project
+ENV SENTRY_PROJECT=$SENTRY_PROJECT
+
 RUN npm ci
 RUN npm run build
 

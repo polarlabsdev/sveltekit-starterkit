@@ -1,6 +1,9 @@
+@use 'variables';
+@use 'sass:color';
+
 html {
-	font-family: $body-font;
-	color: $grey;
+	font-family: variables.$body-font;
+	color: variables.$grey;
 	font-weight: 400;
 	line-height: 1.5625rem;
 
@@ -16,101 +19,115 @@ html {
 	// To be clear, these ones should remain px!
 	font-size: 12px;
 
-	@media all and (min-width: $xs-screen) {
+	@media all and (min-width: variables.$xs-screen) {
 		font-size: 15px;
 	}
 
 	// small screens are like tablets which are surpringly better suited to have
 	// a smaller rem multiplier
-	@media all and (min-width: $sm-screen) {
+	@media all and (min-width: variables.$sm-screen) {
 		font-size: 13px;
 	}
 
-	@media all and (min-width: $md-screen) {
+	@media all and (min-width: variables.$md-screen) {
 		font-size: 16px;
 	}
 
-	@media all and (min-width: $lg-screen) {
+	@media all and (min-width: variables.$lg-screen) {
 		font-size: 17px;
 	}
 
-	@media all and (min-width: $xl-screen) {
+	@media all and (min-width: variables.$xl-screen) {
 		font-size: 18px;
 	}
 
-	@media all and (min-width: $xxl-screen) {
+	@media all and (min-width: variables.$xxl-screen) {
 		font-size: 19px;
 	}
 }
 
 h1 {
-	font-family: $header-font;
+	font-family: variables.$header-font;
 	font-size: 2.8rem;
-	color: $dark-grey;
+	color: variables.$dark-grey;
 	font-weight: 700;
 	line-height: 120%;
-	margin: $spacing-sm-3 0;
+	margin: variables.$spacing-sm-3 0;
 }
 
 h2 {
-	font-family: $header-font;
+	font-family: variables.$header-font;
 	font-size: 2.2rem;
-	color: $dark-grey;
+	color: variables.$dark-grey;
 	font-weight: 700;
 	line-height: 120%;
-	margin: $spacing-sm-3 0;
+	margin: variables.$spacing-sm-3 0;
 }
 
 h3 {
-	font-family: $header-font;
+	font-family: variables.$header-font;
 	font-size: 1.5rem;
-	color: $dark-grey;
+	color: variables.$dark-grey;
 	font-weight: 600;
 	line-height: 120%;
-	margin: $spacing-sm-2 0;
+	margin: variables.$spacing-sm-2 0;
 }
 
 h4 {
-	font-family: $header-font;
+	font-family: variables.$header-font;
 	font-size: 1.5rem;
-	color: $dark-grey;
+	color: variables.$dark-grey;
 	font-weight: 600;
 	line-height: 140%;
-	margin: $spacing-sm-2 0;
+	margin: variables.$spacing-sm-2 0;
 
-	@media screen and (min-width: $md-screen) {
+	@media screen and (min-width: variables.$md-screen) {
 		font-size: 1.25rem;
 	}
 }
 
 h5 {
-	font-family: $header-font;
+	font-family: variables.$header-font;
 	font-size: 1.15rem;
-	color: $dark-grey;
+	color: variables.$dark-grey;
 	font-weight: 600;
 	line-height: 140%;
-	margin: $spacing-sm-2 0;
+	margin: variables.$spacing-sm-2 0;
+}
+
+h6 {
+	font-family: variables.$header-font;
+	font-size: 1.05rem;
+	color: variables.$dark-grey;
+	font-weight: 600;
+	line-height: 140%;
+	margin: variables.$spacing-sm-2 0;
 }
 
 p,
 li,
 label {
-	font-family: $body-font;
+	font-family: variables.$body-font;
 	font-size: 1rem;
-	color: $grey;
+	color: variables.$grey;
 	font-weight: 500;
-	margin: $spacing-sm-3 0;
+	margin: variables.$spacing-sm-3 0;
 	line-height: 160%;
 
-	@media screen and (min-width: $md-screen) {
+	@media screen and (min-width: variables.$md-screen) {
 		font-size: 0.9rem;
 		line-height: 150%;
 	}
 }
 
 article p {
-	line-height: 175%;
-	margin: $spacing-md-3 0;
+	margin: variables.$spacing-md-3 0;
+}
+
+article p,
+li {
+	word-wrap: break-word;
+	line-height: 180%;
 }
 
 .lg-text,
@@ -124,7 +141,7 @@ article p {
 	font-weight: 500;
 	line-height: 140%;
 
-	@media screen and (min-width: $md-screen) {
+	@media screen and (min-width: variables.$md-screen) {
 		font-size: 0.825rem !important;
 	}
 }
@@ -135,7 +152,7 @@ article p {
 	font-weight: 500;
 	line-height: 140%;
 
-	@media screen and (min-width: $md-screen) {
+	@media screen and (min-width: variables.$md-screen) {
 		font-size: 0.6875rem !important;
 	}
 }
@@ -145,12 +162,12 @@ a {
 	transition: all 0.2s ease;
 
 	&:hover {
-		color: $primary !important;
+		color: variables.$primary !important;
 	}
 
 	&.child-hovers {
 		&:hover * {
-			color: $primary;
+			color: variables.$primary;
 		}
 
 		& * {
@@ -165,10 +182,10 @@ a {
 
 p a {
 	text-decoration: underline;
-	color: $primary;
+	color: variables.$primary;
 
 	&:hover {
-		color: darken($primary, 15%) !important;
+		color: color.adjust(variables.$primary, $lightness: -15%) !important;
 	}
 }
 
@@ -209,33 +226,88 @@ ul.inline {
 
 blockquote {
 	margin: 4vh 0;
-	border-top: 0.0625rem solid $subtle-borders;
-	border-bottom: 0.0625rem solid $subtle-borders;
-	text-align: center;
-	padding: $spacing-xl 0;
+	border-left: 0.25rem solid variables.$subtle-borders;
+	text-align: left;
+	padding-left: variables.$spacing-xl;
 
+	&,
 	* {
 		font-style: italic;
+		font-size: 1rem !important;
+		line-height: 160%;
+	}
+}
+
+.info-block {
+	width: 100%;
+	margin: 1.2rem 0 2.2rem 0;
+	padding: 1.125rem 1.25rem;
+	padding-left: 3.5rem;
+	border: 1px solid variables.$blue-dark;
+	color: variables.$blue-dark;
+	border-radius: variables.$global-border-radius;
+	position: relative;
+
+	font-size: 1rem !important;
+	font-weight: 500;
+	line-height: 140%;
+
+	@media screen and (min-width: variables.$md-screen) {
+		font-size: 0.825rem !important;
 	}
 
-	h1,
-	h2,
-	h3,
-	h4 {
-		font-weight: 400;
+	i {
+		position: absolute;
+		left: 0.85rem;
+		top: 50%;
+		transform: translateY(-50%);
+		font-size: 1.95rem;
 	}
 
-	p {
-		font-weight: 300;
+	a {
+		color: inherit;
+		text-decoration: underline;
+		font-weight: 700;
 	}
+
+	&.docs {
+		border-color: variables.$dark-grey;
+		color: variables.$dark-grey;
+	}
+
+	&.warning {
+		border-color: variables.$tertiary;
+		color: variables.$tertiary;
+	}
+
+	&.danger {
+		border-color: variables.$red;
+		color: variables.$red;
+	}
+}
+
+code {
+	font-size: 0.85rem;
+}
+
+pre code {
+	padding: 1.5rem !important;
+	border-radius: variables.$global-border-radius;
+}
+
+:not(pre) > code {
+	background: variables.$surface-alt;
+	border: 1px solid variables.$subtle-borders;
+	padding: 0.125rem 0.25rem;
+	border-radius: 0.2rem;
 }
 
 hr {
 	display: block;
 	height: 0.0625rem;
 	border: 0;
-	border-top: 0.0625rem solid $subtle-borders;
-	margin: $spacing-xl 0;
+	border-top: 0.0625rem solid variables.$subtle-borders;
+	margin: variables.$spacing-xl 0;
 	padding: 0;
 	position: relative;
 	overflow: visible;
@@ -247,7 +319,7 @@ hr {
 		display: block;
 		width: 4px; // leave these px so they stay fixed in size
 		height: 4px;
-		background: $subtle-borders;
+		background: variables.$subtle-borders;
 		border-radius: 100%;
 		position: absolute;
 		top: 50%;
@@ -301,7 +373,7 @@ $thin-weight: 400;
 	text-transform: uppercase;
 }
 
-@each $color-name, $color in $auto-colors {
+@each $color-name, $color in variables.$auto-colors {
 	.text-#{'' + $color-name},
 	.text-#{'' + $color-name} * {
 		color: #{$color};

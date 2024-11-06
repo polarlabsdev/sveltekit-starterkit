@@ -14,7 +14,7 @@ const config = {
 		scss: {
 			// adding this line to our scripts makes sure our variables and
 			// mixins are available in svelte page scss style tags
-			prependData: `@import '${sassPath}/partials/_variables.scss'; @import '${sassPath}/partials/_mixins.scss';`
+			prependData: `@use 'sass:color'; @use '${sassPath}/partials/_variables.scss'; @use '${sassPath}/partials/_mixins.scss';`
 		},
 		postcss: true
 	}),

@@ -1,9 +1,11 @@
+@use 'variables';
+
 .input {
-	margin-bottom: $spacing-md-3;
+	margin-bottom: variables.$spacing-md-3;
 
 	label {
 		display: block;
-		margin: 0 0 $spacing-xs 0;
+		margin: 0 0 variables.$spacing-xs 0;
 	}
 
 	.input-container {
@@ -13,28 +15,28 @@
 		select,
 		.toggleInput {
 			display: block;
-			padding: $spacing-sm-2;
-			border: 0.125rem solid $grey;
+			padding: variables.$spacing-sm-2;
+			border: 0.125rem solid variables.$grey;
 			outline: none;
-			background: $white;
+			background: variables.$white;
 			font-size: 0.875rem;
 			font-weight: 500;
-			font-family: $body-font;
+			font-family: variables.$body-font;
 			width: 100%;
-			border-radius: $global-border-radius;
+			border-radius: variables.$global-border-radius;
 			transition: all 0.3s ease;
 
 			&:focus,
 			&.active {
-				border-color: $primary;
+				border-color: variables.$primary;
 
 				& + i {
-					color: $primary;
+					color: variables.$primary;
 				}
 			}
 
 			&.active {
-				color: $primary;
+				color: variables.$primary;
 			}
 		}
 
@@ -44,12 +46,12 @@
 		}
 
 		.toggleInput {
-			margin-bottom: $spacing-sm;
+			margin-bottom: variables.$spacing-sm;
 			cursor: pointer;
 			user-select: none;
-			border-color: $grey;
+			border-color: variables.$grey;
 
-			@each $color-name, $color in $auto-colors {
+			@each $color-name, $color in variables.$auto-colors {
 				&.#{'' + $color-name} {
 					&.active {
 						border-color: $color;
@@ -70,7 +72,7 @@
 			transform: translateY(-50%);
 			font-size: 1.25rem;
 			font-weight: 600;
-			color: $grey;
+			color: variables.$grey;
 			transition: all 0.3s ease;
 		}
 	}

@@ -1,12 +1,12 @@
-@import './partials/variables';
-@import './partials/mixins';
+@forward './partials/variables';
+@forward './partials/mixins';
 
 /*--------------------------------------------------------------
 # Third Party
 --------------------------------------------------------------*/
-@import './partials/normalize';
-@import './partials/flexgrid';
-@import './partials/fonts';
+@forward './partials/normalize';
+@forward './partials/flexgrid';
+@forward './partials/fonts';
 
 /*--------------------------------------------------------------
 # General Styles
@@ -21,7 +21,7 @@
 // one can piece together HTML like lego, and change the entire site from
 // a handful of SCSS stylesheets in this folder. No JS, no isolated styles,
 // nothing complicated with all full powers of CSS.
-@import './partials/common';
-@import './partials/typography';
-@import './partials/buttons';
-@import './partials/forms';
+@forward './partials/common';
+@forward './partials/typography';
+@forward './partials/buttons';
+@forward './partials/forms';
