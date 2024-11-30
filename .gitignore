@@ -13,3 +13,6 @@ vite.config.ts.timestamp-*
 test-results/
 # Sentry Config File
 .sentryclirc
+
+# helm chart archives
+*.tgz
