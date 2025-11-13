@@ -1,7 +1,7 @@
 <script lang="ts">
 	import DOMPurify from 'isomorphic-dompurify';
 
-	export let htmlString: string;
+	let { htmlString } = $props();
 </script>
 
 <!-- eslint-disable -->

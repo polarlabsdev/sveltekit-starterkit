@@ -1,8 +1,15 @@
 <script lang="ts">
 	import CenterPage from './CenterPage.svelte';
 
-	export let message: string = 'Error loading page, please refresh and try again';
-	export let icon: string = 'ri-error-warning-fill';
+	type ErrorFullScreenProps = {
+		message?: string;
+		icon?: string;
+	};
+
+	let {
+		message = 'Error loading page, please refresh and try again',
+		icon = 'ri-error-warning-fill'
+	}: ErrorFullScreenProps = $props();
 </script>
 
 <CenterPage>

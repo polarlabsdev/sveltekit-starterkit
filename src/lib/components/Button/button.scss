@@ -1,5 +1,5 @@
-@use 'variables';
 @use 'sass:color';
+@use 'component-base' as base;
 
 $default-button-display: inline-flex;
 
@@ -8,24 +8,24 @@ $default-button-display: inline-flex;
 	justify-content: center;
 	align-items: center;
 	box-sizing: border-box;
-	padding: 0.675rem variables.$spacing-md-2;
-	border-radius: variables.$global-border-radius;
+	padding: 0.675rem base.$spacing-md-2;
+	border-radius: base.$global-border-radius;
 	cursor: pointer;
 	transition: all 0.2s ease;
 	font-size: 1.125rem;
 	font-weight: 600;
 	text-decoration: none !important;
 	text-align: center;
-	color: variables.$white;
+	color: base.$white;
 	font-family: 'Rubik', sans-serif;
 	user-select: none;
 
-	@media screen and (min-width: variables.$md-screen) {
+	@media screen and (min-width: base.$md-screen) {
 		font-size: 0.875rem;
-		padding: variables.$spacing-xs variables.$spacing-sm-3;
+		padding: base.$spacing-xs base.$spacing-sm-3;
 	}
 
-	@each $color-name, $color in variables.$auto-colors {
+	@each $color-name, $color in base.$auto-colors {
 		&.#{'' + $color-name} {
 			background: #{$color};
 		}
@@ -40,29 +40,29 @@ $default-button-display: inline-flex;
 	}
 
 	&.dark-text {
-		color: variables.$dark-grey;
+		color: base.$dark-grey;
 	}
 
 	i {
-		margin-right: variables.$spacing-xs;
+		margin-right: base.$spacing-xs;
 		font-weight: 100;
 	}
 
 	&.lg {
-		padding: variables.$spacing-md 1.6rem;
+		padding: base.$spacing-md 1.6rem;
 		font-size: 1.25rem;
 
-		@media screen and (min-width: variables.$md-screen) {
-			padding: variables.$spacing-sm-2 variables.$spacing-md-2;
+		@media screen and (min-width: base.$md-screen) {
+			padding: base.$spacing-sm-2 base.$spacing-md-2;
 			font-size: 1rem;
 		}
 	}
 
 	&.sm {
-		padding: variables.$spacing-sm variables.$spacing-md;
+		padding: base.$spacing-sm base.$spacing-md;
 		font-size: 1rem;
 
-		@media screen and (min-width: variables.$md-screen) {
+		@media screen and (min-width: base.$md-screen) {
 			padding: 0.18rem 0.525rem;
 			font-size: 0.75rem;
 		}
@@ -92,7 +92,7 @@ $default-button-display: inline-flex;
 	&.block-button-mobile {
 		display: flex;
 
-		@media screen and (min-width: variables.$sm-screen) {
+		@media screen and (min-width: base.$sm-screen) {
 			display: $default-button-display;
 		}
 	}

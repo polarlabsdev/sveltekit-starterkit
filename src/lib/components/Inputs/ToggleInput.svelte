@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
 	export type ToggleValues = string[];
 
 	export type ToggleOption = {
@@ -9,11 +9,21 @@
 </script>
 
 <script lang="ts">
-	export let name: string;
-	export let label: string;
-	export let options: ToggleOption[];
-	export let selected: ToggleValues;
-	export let onClick: () => void = () => {};
+	type ToggleInputProps = {
+		name: string;
+		label: string;
+		options: ToggleOption[];
+		selected: ToggleValues;
+		onClick?: () => void;
+	};
+
+	let {
+		name,
+		label,
+		options,
+		selected = $bindable(),
+		onClick = () => {}
+	}: ToggleInputProps = $props();
 
 	// Because Svelte's reactivity is triggered by assignments,
 	// using array methods like push and splice won't automatically cause updates.
@@ -31,12 +41,12 @@
 <div class="input {name}">
 	<label class="text-dark bold" for={name}>{label}</label>
 
-	{#each options as option}
-		<div class="input-container" on:click={onClick}>
+	{#each options as option (option.value)}
+		<div class="input-container" onclick={onClick}>
 			<div
 				class="toggleInput {option.color || ''}"
 				class:active={selected.includes(option.value)}
-				on:click={() => toggleOption(option.value)}
+				onclick={() => toggleOption(option.value)}
 			>
 				{option.displayText}
 			</div>
@@ -48,3 +58,7 @@
 		</div>
 	{/each}
 </div>
+
+<style lang="scss">
+	@use 'ui/forms';
+</style>

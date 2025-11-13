@@ -3,7 +3,7 @@
 	import type { PageData } from './$types';
 	import { env } from '$env/dynamic/public';
 	import LoadingIcon from '$lib/components/LoadingIcon.svelte';
-	import Button from '$lib/components/Button.svelte';
+	import Button from '$lib/components/Button/Button.svelte';
 	import RenderHtml from '$lib/components/RenderHtml.svelte';
 	import TextInput from '$lib/components/Inputs/TextInput.svelte';
 	import DropdownInput, {
@@ -14,6 +14,7 @@
 		type ToggleOption,
 		type ToggleValues
 	} from '$lib/components/Inputs/ToggleInput.svelte';
+	import Hero from '$lib/components/Hero/Hero.svelte';
 
 	export let data: PageData;
 
@@ -60,18 +61,34 @@
 
 <section>
 	<div class="margin">
+		<Hero
+			title="Welcome to the Svelte Demo App"
+			body="This is a demo app to showcase Svelte components and features."
+			button={{
+				text: 'Get Started',
+				icon: 'ri-arrow-right-line',
+				linkUrl: 'https://svelte.dev'
+			}}
+			image={{
+				src: 'https://i.redd.it/svge8vxx780f1.jpeg',
+				alt: 'Demo Image'
+			}}
+		/>
+
 		<ResponsiveHelper />
+
+		<h1>Various Titles to Show Sizing</h1>
+		<h2>Various Titles to Show Sizing</h2>
+		<h3>Various Titles to Show Sizing</h3>
+		<h4>Various Titles to Show Sizing</h4>
+		<h5>Various Titles to Show Sizing</h5>
 
 		{#await page}
 			<LoadingIcon />
 		{:then page}
-			<h1>{page.title}</h1>
-			<h2>{page.title}</h2>
-			<h3>{page.title}</h3>
-			<h4>{page.title}</h4>
-			<h5>{page.title}</h5>
+			<p>{page.fact}</p>
 		{:catch}
-			<p>Unable to load cat titles</p>
+			<p>Unable to load cat fact</p>
 		{/await}
 
 		<blockquote>

@@ -9,25 +9,14 @@ export type SvelteFetch = (
 
 type APIFetchParams = {
 	path: string;
-	baseUrl?: string;
 	params?: URLSearchParams;
 	svelteFetch?: SvelteFetch;
+	baseUrl?: string; // this is optional in case we want to use a different base URL, or .env isn't set (e.g. for testing)
 };
 
-type APIFetchResult<T> = {
-	data: T | undefined;
-	error?: {
-		message: string;
-		status: number;
-	};
-};
+type APIFetchResult<T> = { data: T | undefined; error?: { message: string; status: number } };
 
-export type APIListBaseType<T> = {
-	next: number;
-	previous: number;
-	count: number;
-	results: T[];
-};
+export type APIListBaseType<T> = { next: number; previous: number; count: number; results: T[] };
 
 // We don't fail this function directly by throwing errors because Sveltekit
 // sometimes seems to shut down completely if it encounters an error on the server.
@@ -35,18 +24,16 @@ export type APIListBaseType<T> = {
 // When using this function, check for errorMessage then handle with the sveltekit error function.
 export const apiFetch = async <T>({
 	path,
-	baseUrl,
 	params,
-	svelteFetch
+	svelteFetch,
+	baseUrl = publicEnv.PUBLIC_API_URL
 }: APIFetchParams): Promise<APIFetchResult<T>> => {
 	const fetchFunc = svelteFetch ?? fetch;
-	const apiBaseUrl = baseUrl ?? publicEnv.PUBLIC_API_URL;
-
 	let data: APIFetchResult<T>['data'];
 	let error: APIFetchResult<T>['error'];
 
 	try {
-		let apiUrl = `${apiBaseUrl}${path}`;
+		let apiUrl = `${baseUrl}${path}`;
 
 		if (params && params.size > 0) {
 			apiUrl += `?${params}`;
@@ -70,17 +57,14 @@ export const apiFetch = async <T>({
 		// 2024 and we still can't catch specific errors in JS or even rely on Error type
 		console.log('ERROR CAUGHT:');
 		console.log(e);
-		error = {
-			message: e.message ?? 'Something went wrong calling the API',
-			status: 500
-		};
+		error = { message: e.message ?? 'Something went wrong calling the API', status: 500 };
 	}
 
 	return { data, error };
 };
 
 // https://www.okupter.com/blog/svelte-debounce
-/* eslint-disable @typescript-eslint/ban-types */
+/* eslint-disable @typescript-eslint/no-unsafe-function-type */
 export const debounce = (callback: Function, wait = 1200) => {
 	let timeout: ReturnType<typeof setTimeout>;
 

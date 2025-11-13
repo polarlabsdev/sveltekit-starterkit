@@ -1,3 +1,6 @@
+@use 'component-base' as base;
+@use 'layout/flexgrid';
+
 .hero {
 	padding: 3.85rem 0;
 
@@ -9,14 +12,14 @@
 		max-height: 40vh;
 		min-height: 18.75rem;
 		max-width: 100%;
-		margin-bottom: variables.$spacing-md-2;
+		margin-bottom: base.$spacing-md-2;
 
-		@media screen and (min-width: variables.$md-screen) {
+		@media screen and (min-width: base.$md-screen) {
 			margin: 0;
 			max-height: 60vh;
 		}
 
-		@media screen and (min-width: variables.$xxl-screen) {
+		@media screen and (min-width: base.$xxl-screen) {
 			max-height: 48vh;
 		}
 	}

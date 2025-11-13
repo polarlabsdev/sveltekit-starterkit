@@ -1,12 +1,23 @@
 <script lang="ts">
 	import { debounce } from '$lib/utils';
 
-	export let name: string;
-	export let label: string;
-	export let placeholder: string = '';
-	export let value: string;
-	export let iconName: string;
-	export let onChange: () => void = () => {};
+	type TextInputProps = {
+		name: string;
+		label: string;
+		placeholder?: string;
+		value: string;
+		iconName: string;
+		onChange?: () => void;
+	};
+
+	let {
+		name,
+		label,
+		placeholder = '',
+		value = $bindable(),
+		iconName,
+		onChange = () => {}
+	}: TextInputProps = $props();
 </script>
 
 <div class="input {name}">
@@ -19,14 +30,18 @@
 			id={`${name}-input`}
 			bind:value
 			{placeholder}
-			on:keyup={debounce(onChange)}
+			onkeyup={debounce(onChange)}
 		/>
 		<i
 			class={`clickable ${value ? 'ri-close-circle-line' : iconName}`}
-			on:click={() => {
+			onclick={() => {
 				value = '';
 				onChange();
 			}}
 		></i>
 	</div>
 </div>
+
+<style lang="scss">
+	@use 'ui/forms';
+</style>

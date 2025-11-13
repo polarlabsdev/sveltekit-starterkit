@@ -1,39 +1,35 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	let pageWidth = $state(0);
+	let htmlElem: HTMLElement | undefined = $state();
 
-	let pageWidth!: number;
-	let pageSize: string = 'xxs-screen';
-	let htmlElem: HTMLElement;
-	let htmlFontSize: CSSStyleValue | undefined;
-
-	onMount(() => {
+	$effect(() => {
 		htmlElem = document.getElementsByTagName('html')[0];
 	});
 
 	// make sure these match your scss variables!
-	$: {
+	let pageSize = $derived.by(() => {
 		if (pageWidth >= 2500) {
-			pageSize = 'xxl-screen';
+			return 'xxl-screen';
 		} else if (pageWidth >= 1920) {
-			pageSize = 'xl-screen';
+			return 'xl-screen';
 		} else if (pageWidth >= 1600) {
-			pageSize = 'lg-screen';
+			return 'lg-screen';
 		} else if (pageWidth >= 1150) {
-			pageSize = 'md-screen';
+			return 'md-screen';
 		} else if (pageWidth >= 768) {
-			pageSize = 'sm-screen';
+			return 'sm-screen';
 		} else if (pageWidth >= 400) {
-			pageSize = 'xs-screen';
+			return 'xs-screen';
 		} else {
-			pageSize = 'xxs-screen';
+			return 'xxs-screen';
 		}
-	}
+	});
 
-	$: {
+	let htmlFontSize = $derived.by(() => {
 		if (htmlElem && pageWidth) {
-			htmlFontSize = htmlElem.computedStyleMap().get('font-size');
+			return getComputedStyle(htmlElem).getPropertyValue('font-size');
 		}
-	}
+	});
 </script>
 
 <svelte:window bind:innerWidth={pageWidth} />

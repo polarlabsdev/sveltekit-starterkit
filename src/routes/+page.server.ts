@@ -7,33 +7,25 @@ export const load: PageServerLoad = async ({ fetch, isDataRequest }) => {
 
 	// This little trick makes the page wait for the API on first load, or show spinners
 	// on subsequent loads. See the {await} block in +page.svelte
-	return {
-		page: isDataRequest ? page : await page
-	};
+	return { page: isDataRequest ? page : await page };
 };
 
 const getPageData = async (fetch: SvelteFetch) => {
 	const { data, error } = await apiFetch<any>({
-		path: '/facts',
-		baseUrl: 'https://cat-fact.herokuapp.com',
-		svelteFetch: fetch
+		path: '/fact',
+		svelteFetch: fetch,
+		baseUrl: 'https://catfact.ninja'
 	});
 
 	if (error) {
-		handleError(error.status, {
-			message: error.message
-		});
+		handleError(error.status, { message: error.message });
 	} else if (data) {
-		return mapHomePageData(data[0].text);
+		return mapHomePageData(data);
 	} else {
-		handleError(500, {
-			message: 'No page data received'
-		});
+		handleError(500, { message: 'No page data received' });
 	}
 };
 
-const mapHomePageData = async (catFact: string) => {
-	return {
-		title: catFact
-	};
+const mapHomePageData = async (data: any) => {
+	return { fact: data.fact };
 };

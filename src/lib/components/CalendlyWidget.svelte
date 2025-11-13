@@ -17,13 +17,15 @@
 {/if}
 
 <style lang="scss">
+	@use 'component-base' as base;
+
 	.calendly-inline-widget {
 		min-width: 290px;
 		height: 600px;
-		border-radius: variables.$global-border-radius;
+		border-radius: base.$global-border-radius;
 		overflow: hidden;
 
-		@media screen and (min-width: variables.$xl-screen) {
+		@media screen and (min-width: base.$xl-screen) {
 			height: 720px;
 			box-shadow: none !important;
 		}

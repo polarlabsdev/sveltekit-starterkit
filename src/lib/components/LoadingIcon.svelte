@@ -1,5 +1,5 @@
 <script lang="ts">
-	export let centerIcon: boolean = true;
+	let { centerIcon = true } = $props();
 </script>
 
 <div class="loading-icon text-primary" class:center-xxs={centerIcon}>
