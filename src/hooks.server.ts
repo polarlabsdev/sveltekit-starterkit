@@ -5,7 +5,7 @@ import { sitemapHook } from 'sveltekit-sitemap';
 import { sitemap } from './sitemap';
 // import type { BlogPostType } from '$lib/types/blog';
 // import { apiFetch, getSentryOptions, type APIListBaseType } from '$lib/utils';
-import { getSentryOptions } from '$lib/utils';
+import { getSentryOptions } from '$lib/utils/sentry';
 // import { mapPostsList } from '$lib/utils/stories';
 import { env } from '$env/dynamic/private';
 

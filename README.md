@@ -1,35 +1,99 @@
-# Polar Labs Sveltekit Starterkit
+# Polar Labs SvelteKit StarterKit
 
-The intention of this repo is to be a simple place to start any new sveltekit project without having to go through all the initial boilerplate steps. We use it internally for our projects and also push updates to an open source Github repo. If you'd like to use it either clone or fork this repo and do as you'd like!
+The intention of this repo is to be a simple place to start any new SvelteKit project without having to go through all the initial boilerplate steps. We use it internally for our projects and also push updates to an open source Github repo. If you'd like to use it either clone or fork this repo and do as you'd like!
 
 ## Overview
 
-This repo contains the barebones of a sveltekit 4.2 app. We have made the following choices with this starterkit:
+This repo contains a modern SvelteKit application built with the latest tools and best practices. We have made the following choices with this StarterKit:
 
-- We left the default testing and build libs (vite and playwright)
-- We chose to use [svelte-preprocess](https://github.com/sveltejs/svelte-preprocess) as it allows us to use external files and global css out of the box
-- We chose to use a custom SCSS framework based on a customized [flexboxgrid](http://flexboxgrid.com/) that has been updated to use Sass and integrate into a greater custom framework. This is a starterkit for those strong in CSS, though you could swap things out pretty easily for something like TailwindCSS
-- We use autoprefixer to handle brower compatibility (so you could just add tailwind to the postcss plugins)
-- We included a dockerfile that can be deployed verbatim to kubernetes
-- We included our standard helm template for deploying to kubernetes (TODO)
-- We included a bitbucket pipelines file we use ourselves that manages the deployment to kubernetes. It should be trivial to convert this to your own CI/CD service
+- **Svelte 5** - The latest version of Svelte with modern reactivity and improved performance
+- **SvelteKit 2** - File-based routing with server-side rendering and static site generation
+- **Tailwind CSS 4** - The newest version with native CSS support and improved performance via `@tailwindcss/vite`
+- **shadcn-svelte** - A comprehensive component library providing accessible, customizable UI components
+- **TypeScript** - Full type safety with strict configuration
+- **Vite 7** - Lightning-fast development server and build tool
+- **Vitest & Playwright** - Unit testing with Vitest and end-to-end testing with Playwright
+- **ESLint 9 & Prettier** - Modern linting and formatting with flat config
+- **Husky** - Pre-commit hooks for code quality
+- **Sentry** - Error tracking and performance monitoring
+- **Node.js Adapter** - Production-ready deployment with Docker support
+- **Mode Watcher** - Elegant dark/light theme switching
+- **RemixIcon** - Beautiful icon library with 2000+ icons
 
-The intention is that (especially if you agree with our choices) this repo provides a starterkit that you can simply point to your own kubernetes and start writing code - no "beginning of the project" boilerplate needed!
+The intention is that this repo provides a production-ready StarterKit that you can deploy immediately and start building features - no "beginning of the project" boilerplate needed!
 
-## Developing
+## Getting Started
 
-Sveltekit uses a file-based router like next.js but with very much its own flavour. You can find these files all under `src/routes`. Sveltekit documentation can explain exactly how to use these files.
+### Prerequisites
 
-Common files like components can be found in `src/lib` which can be easily accessed in page files as `import x from '$lib/whatever`. It is best to abstract common elements of your site into components as much as possible. Ideally your page files are actually quite small as your components can isolate their logic and styles (what is even necessary outside the global framework explained below). If you find individual pages getting long, you should step back and consider if there are things that can be abstracted.
+- Node.js 18+ (recommended: 22+)
+- npm, pnpm, or yarn
 
-Once you've cloned the project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+### Installation
+
+1. Clone the repository:
+
+```bash
+git clone <your-repo-url>
+cd sveltekit-starterkit
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+# or
+pnpm install
+# or
+yarn install
+```
+
+3. Set up environment variables:
+
+```bash
+cp .env.example .env
+# Edit .env with your configuration
+```
+
+4. Start the development server:
 
 ```bash
 npm run dev
-
 # or start the server and open the app in a new browser tab
 npm run dev -- --open
 ```
+
+## Project Structure
+
+SvelteKit uses a file-based router similar to Next.js but with its own conventions. Here's how this project is organized:
+
+```
+src/
+├── lib/
+│   ├── components/
+│   │   ├── ui/           # shadcn-svelte components
+│   │   └── ThemeToggle.svelte
+│   ├── styles/
+│   │   ├── tailwind.css  # Main Tailwind styles
+│   │   ├── typography.css # Typography utilities
+│   │   └── fonts.css     # Font definitions
+│   ├── utils/            # Utility functions
+│   └── types/            # TypeScript types
+├── routes/
+│   ├── +layout.svelte    # Root layout
+│   ├── +page.svelte      # Home page
+│   └── +page.server.ts   # Server-side data loading
+├── app.html              # HTML shell
+└── hooks.server.ts       # Server hooks
+```
+
+### Development Philosophy
+
+- **Component-First**: Abstract common UI elements into reusable components
+- **Type Safety**: Use TypeScript everywhere for better developer experience
+- **Utility CSS**: Leverage Tailwind's utility classes for rapid styling
+- **Accessibility**: Build with accessibility in mind using shadcn-svelte components
+- **Performance**: Optimize for Core Web Vitals and user experience
 
 ## Building
 
@@ -39,155 +103,327 @@ To create a production version of your app:
 npm run build
 ```
 
-You can preview the production build with `npm run preview`.
+You can preview the production build with:
+
+```bash
+npm run preview
+```
+
+### Available Scripts
+
+- `npm run dev` - Start development server with hot reloading
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build locally
+- `npm run check` - Run SvelteKit and TypeScript checks
+- `npm run lint` - Run ESLint and Prettier checks
+- `npm run format` - Format code with Prettier
+- `npm run test` - Run all tests (unit + integration)
+- `npm run test:unit` - Run unit tests with Vitest
+- `npm run test:integration` - Run browser tests with Playwright
 
 ## Deployment
 
-This repo comes with a working Dockerfile that you can simply build and deploy. It uses node v20 and uses a builder image which copies into a deployable image which keeps the final size small since most of svelte is preprocessors we can remove for the deployable image.
+This repo includes a production-ready Docker setup with multi-stage builds for optimal image size and security.
 
-**Before you build any docker images though, make sure you generate a `.env` file in the root!** When we deploy we rely on environment variables set in Kubernetes, but for local development you can take the variables names from `envVars` and `secrets` in `web_chart/values.yaml` and put them in your `.env`.
+### Docker Deployment
 
-We use the node-adapter for sveltekit with the barest setup accepting most of their defaults. **This means the only thing you need to do to build is set the ORIGIN env var (the domain your site will be accessed from) along with any other necessary app env vars.** The app will then run on port 3000. Here is an example build command and docker-compose:
+The included Dockerfile uses Node.js 22 Alpine and follows best practices:
 
+1. **Multi-stage build** - Separate build and runtime containers
+2. **Security** - Runs as non-root user
+3. **Optimized** - Removes dev dependencies in production image
+
+**Before building, set up your environment variables:**
+
+```bash
+# Copy example environment file
+cp .env.example .env
+# Edit .env with your production values
 ```
-docker build -t your-built-image:1.0.0 .
 
+**Build and run:**
+
+```bash
+# Build the image
+docker build -t your-app:latest .
+
+# Run with docker-compose
 version: "3.8"
 services:
-  your-website:
-    image: your-built-image:latest
-    container_name: your-website
+  app:
+    image: your-app:latest
+    container_name: your-app
     env_file: .env
     ports:
-      - 3000:3000
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
     restart: unless-stopped
 ```
 
-> **Note:** We deploy this container using our helm template you can see in `web_chart/Chart.yaml` so in our docker image we don't use nginx reverse-proxies or anything like that. It's up to you how you would like to deploy.
+### Environment Variables
+
+Required environment variables for production:
+
+- `ORIGIN` - The domain your site will be accessed from (e.g., `https://yoursite.com`)
+- `SENTRY_ORG` - Your Sentry organization (optional, for error tracking)
+- `SENTRY_PROJECT` - Your Sentry project (optional, for error tracking)
+- `PUBLIC_API_URL` - Public API URL for client-side requests
+
+### Kubernetes Deployment
+
+The project includes Helm charts in `web_chart/` for Kubernetes deployment using our Polar Labs helm StarterKit from [helm.polarlabs.ca](https://helm.polarlabs.ca). The setup assumes:
+
+- No nginx reverse proxy (SvelteKit handles this)
+- Environment variables injected via Kubernetes secrets/configmaps
+- Ingress controller for external traffic
 
 ### CI/CD
 
-We include our bitbucket pipelines file as a reference for how to deploy this container in an automated fashion. We use the github branch model and aim for quick deploys over complicated release models. Our flow looks like this:
+The project includes Bitbucket Pipelines configuration that can be adapted for other CI/CD systems. Our deployment strategy focuses on simplicity and speed:
 
-- Pull Requests
-  - On every pull request run tests. We set branch restrictions in our repo to only allow merges to main, and only after the pipeline passes
-  - We will likely use kubernetes in the future to deploy preview environments with a manual trigger instead of keeping a dedicated staging env alive
-  - We do all our linting/formatting with husky (included in this repo) to keep our build minutes low
-- Merge to Main
-  - Run all the tests again to make sure everything still jives with the existing code before we deploy it
-  - On manual trigger, build the docker image, upload to a private registry, deploy to kubernetes with the Polar Labs helm chart.
+**Branch Model:**
 
-Keeping our process simple means we can rapidly deploy updates without having to worry about named branches, release branches, or hotfix merges back to develop. In our eyes, all code should be complete and passing tests before it goes to main, and if that's true it can go to prod.
+- Feature branches → Pull Requests → Main → Production
+- All code must pass tests before merging
+- Husky pre-commit hooks ensure code quality
 
-> **Note:** Make sure you set the pipeline variables/secrets from the file in the CI runner!
+**Pipeline Steps:**
 
-## How to use the included SCSS Framework
+1. **Pull Requests**: Run tests, linting, and type checking
+2. **Main Branch**: Full test suite + optional deployment trigger
+3. **Production**: Build Docker image → Push to registry → Deploy to Kubernetes
 
-This is a custom framework that has been built up over many years of web development that requires solid CSS knowledge but if used well make development rapid and deeply integrated. However, if that's not your cup of tea it should be trivial to switch to TailwindCSS.
+**Quality Gates:**
 
-**The Philosophy:**
+- TypeScript type checking with `svelte-check`
+- ESLint with strict rules
+- Prettier code formatting
+- Unit tests with Vitest
+- Integration tests with Playwright
+- Pre-commit hooks with Husky
 
-The idea behind this framework is to double down on semantic HTML (which has never been more possible since our discovery of Svelte!) and provide a set of global styles that allow you to quickly piece together a website using common classes and typography within a 12 column grid system based on flexbox with several flexbox goodies. There is a basic example we are using as a "hello world" homepage now that you will notice is completely responsive right out of the box with the code you see on the page - no page specific CSS needed!
+**Deployment Variables:**
+Set these in your CI/CD system:
 
-There are several important concepts behind this system:
+- `DOCKER_REGISTRY` - Your container registry
+- `KUBE_CONFIG` - Kubernetes configuration
+- `SENTRY_AUTH_TOKEN` - For source map uploads
+- Environment-specific secrets
 
-- The grid
-- Proper usage of rem units
-- Proper usage of scss variables
-- Semantic typography
-- Common utility classes
+## Styling with Tailwind CSS 4 and shadcn-svelte
 
-### The grid
+This StarterKit uses the latest Tailwind CSS 4 with native CSS support and shadcn-svelte for components. This combination provides both utility-first styling and high-quality, accessible components out of the box.
 
-The grid is a throwback to the old 12 column 960/bootstrap grid but using flexbox to power it instead of float like the olden days. The concept is simple:
+### Tailwind CSS 4 Features
 
-- Wrap everything inside a `.row` class (DO NOT FORGET THIS OR THINGS GUNNA BE BROKE)
-- Place `.col` classes inside the row with the number of columns (out of 12) this container should take up, and for what screen size.
+**Native CSS Support**: Tailwind 4 uses native CSS features, eliminating the need for PostCSS plugins:
 
-Consider everything from a container perspective. Don't put columns directly on content elements (type, images, etc). Everything should be inside a container, and everything inside the container should be sized by percentage (usually just 100%). Then you can just resize the containers as the screen changes.
+- `@import 'tailwindcss'` imports the framework directly
+- `@theme` blocks for custom design tokens
+- `@utility` for custom utilities
+- `@layer` for organizing styles
 
-Doing this, you can place all your content inside containers that take up a certain number of columns depending on the screen size (defined in your variables.scss file, more on that later). For example, you might have an element like this:
+**Custom Design System**: Our configuration includes:
 
+- **Responsive breakpoints**: xs (420px), sm (640px), md (768px), lg (1024px), xl (1280px), 2xl (1536px)
+- **Typography scale**: Display variants, semantic headings, and utility classes
+- **Color system**: Semantic colors with dark mode support using CSS custom properties
+- **Container utilities**: Responsive padding and max-width constraints
+
+### shadcn-svelte Components
+
+We use [shadcn-svelte](https://shadcn-svelte.com/) for accessible, customizable UI components:
+
+```svelte
+import Button from '$lib/components/ui/button/button.svelte'; import * as Card from
+'$lib/components/ui/card'; import Badge from '$lib/components/ui/badge/badge.svelte';
+
+<Button variant="outline" size="lg">Click me</Button>
+
+<Card.Root>
+	<Card.Header>
+		<Card.Title>Card Title</Card.Title>
+		<Card.Description>Card description</Card.Description>
+	</Card.Header>
+	<Card.Content>
+		<p>Card content goes here</p>
+	</Card.Content>
+</Card.Root>
 ```
-<div class="row">
-  <div class="col-xxs-12 col-sm-6 col-md-4 col-lg-3 col-xxl-2">
-    <div class="box background-primary"></div>
-  </div>
-</div>
+
+### Available UI Components
+
+The StarterKit includes these shadcn-svelte components:
+
+- **Button**: Multiple variants (primary, secondary, outline, ghost, destructive)
+- **Card**: Header, content, and footer sections
+- **Form Controls**: Input, Label, Checkbox, Select, Radio Group
+- **Feedback**: Alert, Badge, Skeleton
+- **Layout**: Separator, Toggle
+- **Custom**: ThemeToggle for dark/light mode switching
+
+### Typography System
+
+Semantic HTML with utility classes for enhanced typography:
+
+```svelte
+<h1 class="display-1">Large Display Heading</h1>
+<h2>Semantic Heading 2</h2>
+<p class="text-lead">Lead paragraph for introductions</p>
+<p>Regular paragraph text</p>
+<p class="text-small text-muted-foreground">Small muted text</p>
 ```
 
-In regular english, this means simply the following:
+### Color System & Dark Mode
 
-- on extra extra small screens this container should be 12 columns (100%)
-- on small screens, it should be 6 columns (50%)
-- on medium screens, 4 (33.3%)
-- on large screens, 3 (25%)
-- and so on
+Colors are defined using CSS custom properties with automatic dark mode:
 
-There are also lots of fun utility classes, like `between-sm` which you can put on the row class which will apply flexbox's `space-around` property on small screens and above.
+```css
+:root {
+	--background: oklch(1 0 0);
+	--foreground: oklch(0.145 0 0);
+	--primary: oklch(0.205 0 0);
+	/* ... more colors */
+}
 
-For a (mostly) full overview of the available options check out http://flexboxgrid.com/. In the future we'd like to fork this website and open source fully the scss version of the grid with the extra goodies we've addded such as our vertical stretch options you can see in `src/lib/styles/partials/_flexgrid.scss`.
+.dark {
+	--background: oklch(0.145 0 0);
+	--foreground: oklch(0.985 0 0);
+	/* ... dark variants */
+}
+```
 
-### Proper usage of rem units
+Use `mode-watcher` for theme switching:
 
-This unit simply put, is the font-size of the `<html></html>` tag multiplied by the rem unit. For example, the default font size is 16px. If I set a width of 2rem, the browser will compute the width to be 32px.
+```svelte
+import {(setMode, mode)} from 'mode-watcher';
 
-Why do this? Because if you're consistent with it, **you can scale your entire website from a single location.**
+<button onclick={() => setMode($mode === 'dark' ? 'light' : 'dark')}> Toggle Theme </button>
+```
 
-If you look at `src/lib/styles/partials/_typography.scss` you'll see a number of media queries on the html tag using our scss variables for screen sizes - the same ones the grid uses. Forget for a minute that the property is called `font-size` and mentally replace it with `rem-scale` and what you can do is essentially set a base multiplier for the scale of your entire website based on the screen size, which means never again will you have to set 50 media queries to adjust font sizes and margins based on what screen size you're viewing. So long as you use rem everywhere anyways.
+### Custom Utilities
 
-There is [a handy vscode extension](https://marketplace.visualstudio.com/items?itemName=sainoba.px-to-rem) to help you convert back and forth from px. In practise, you can use px on your laptop screen (which is likely set to 16px in common.scss) then just swap all the px values when you're done.
+Add custom utilities in `tailwind.css`:
 
-### Proper usage of scss variables
+```css
+@utility container {
+	margin-inline: auto;
+	padding-inline: var(--container-padding);
+	max-width: var(--breakpoint-xl);
+}
 
-Take a look at `src/lib/styles/partials/_variables.scss` and notice how all the site colours and screen sizes can be found there. And some even alias each other! The idea is that you can set all of your colours here and use them programmatically (almost like JS even, except remember sass is a preprocessor).
+@utility text-balance {
+	text-wrap: balance;
+}
+```
 
-With some planning ahead, you can do the following:
+### Best Practices
 
-- Control all the colours of your website from a single place
-- Control all the various styling elements from a single place, such as border radius or website margins
-- Create auto-generated utility classes (see ~line 85 of `src/lib/styles/partials/_common.scss`)
-- Control the sizes of your breakpoints\*
+1. **Use semantic HTML** with utility classes for styling
+2. **Leverage component composition** with shadcn-svelte
+3. **Follow the design system** defined in `tailwind.css`
+4. **Use CSS custom properties** for theme consistency
+5. **Prefer utilities over custom CSS** for maintainability
 
-Take advantage of this! Anywhere you would use a constant in JS, you should use a sass variable here.
+## Configuration
 
-\* -> NOTE: In the current version of the site you _can_ set your screen sizes here, but to update the grid you must also swap the `$breakpoints` variable in `src/lib/styles/partials/_flexgrid.scss`. There might be other places as well such as `src/lib/components/ResponsiveHelper.svelte`. In the future we will figure out a better way to handle this.
+The project configuration is streamlined with modern tooling:
 
-### Semantic typography
+### Core Configuration Files
 
-Our intention here is to stick as close to semantic HTML as possible. It's better for SEO, it's better for readability, it's better for you. In `src/lib/styles/partials/_typography.scss` we define the sizes and styles of all the HTML tags you might use for fonts from h1 -> p. Then when you're writing code, you can simply use the tag that you would expect to use. If you are writing font styles directly in page CSS, you should have a very good reason to be breaking the style guide.
+- **`vite.config.ts`** - Build tool configuration with Tailwind, Sentry, and sitemap plugins
+- **`svelte.config.js`** - Svelte preprocessing and adapter configuration
+- **`tailwind.css`** - Tailwind 4 configuration with design tokens and utilities
+- **`components.json`** - shadcn-svelte component configuration
+- **`eslint.config.js`** - Flat ESLint configuration with TypeScript and Svelte rules
+- **`playwright.config.ts`** - End-to-end testing configuration
 
-You'll also notice we generate more utility classes to easily apply colours from the variables.scss file to your fonts right from the HTML.
+### Key Features
 
-### Common utility classes
+**Vite Plugins:**
 
-The ultimate goal of this thinking is to write as little page specific CSS as possible. You can't get around certain unique aspects of your pages needing custom styling, but if you can think abstractly and break your site elements down essentially into lego pieces, you can construct your website quickly and easily and change the entire site from a single place.
+- `@tailwindcss/vite` - Native Tailwind CSS 4 support
+- `@sentry/sveltekit` - Error tracking and performance monitoring
+- `sitemapPlugin` - Automatic sitemap generation
 
-This framework functions best when you really take to heart the power and role of CSS in your website. For example, don't animate things by changing their values with JS. Create classes like `.open` and `.closed` and simply add and remove those classes from an element using JS. And if you can get abstract enough, you can reuse those classes across different parts of your website.
+**PostCSS**: Minimal configuration (Tailwind 4 handles most preprocessing natively)
 
-The major difference between this and a library like Tailwind is that this way provides you a strong ability to customize your framework and take advantage of the many powerful features of CSS like tag selectors or CSS animations. It does require you to be strict to your own rules, but it also allows you to set your own rules.
-
-## Preprocessing
-
-All preprocessing can be found in these two files:
-
-- svelte.config.js
-- vite.config.ts
-
-Though there is also a `postcss.config.js` which contains the config to run autoprefixer for the CSS. There is also some added parts to the scss section of `svelte-preprocess` which allow us to prepend our variables and mixins to page styles.
+**TypeScript**: Strict configuration with SvelteKit path aliases
 
 ## Testing
 
-Testing is done with vitests for unit tests and playwright for integration tests. These come default with sveltekit.
+The project includes comprehensive testing setup with modern tools:
 
-We recommend using this: https://playwright.dev/docs/codegen#generate-tests-in-vs-code to easily write tests in the browser. The only catch is that for some reason vscode doesn't start the server, so you have to have your own dev server running then remove the url from the resulting test file.
+### Unit Testing with Vitest
 
-## Tips
+```bash
+# Run unit tests
+npm run test:unit
 
-- Understanding reactivity in svelte is a bit of a learning curve but necessary to make things work the way you expect. If you are coming from React you might expect everything to auto rebuild for you, but Svelte you **must** declare what you want to be reactive with `$: your code`. This includes even things coming from page load. Read the docs!
-- Understanding how page load works in svelte is also a bit of a learning curve but necessary knowledge. Know the difference between page.ts and page.server.ts and when to use either. Understand that things that load in your page load function **will** delay pages from loading which can be an awkward delay and it's not clear how to mitigate this without a bunch of research. This blog post covers how to make your data stream in so you don't block page load: https://geoffrich.net/posts/conditionally-stream-data/ but it's important to remember that streamed data won't be crawled by SEO bots (mostly anyways, apparently google is smarter these days)! So we recommend the trick at the end of the article with the "isDataRequest". Also, [you don't need to nest the promises anymore](https://kit.svelte.dev/docs/migrating-to-sveltekit-2#top-level-promises-are-no-longer-awaited).
-- When you go to deploy make sure you swap the favicons and instances of the polarlabs.ca domain!
+# Run with watch mode during development
+npx vitest
+```
 
-## Useful Resources
+**Features:**
 
-- [How Svelte Stores work (state management)](https://www.youtube.com/watch?v=L3uBfL-4dDM)
+- Fast test execution with Vite's infrastructure
+- TypeScript support out of the box
+- Component testing capabilities
+- Coverage reporting
+
+### Integration Testing with Playwright
+
+```bash
+# Run integration tests
+npm run test:integration
+
+# Run specific browsers
+npx playwright test --project=chromium
+npx playwright test --project=firefox
+```
+
+**Features:**
+
+- Cross-browser testing (Chromium, Firefox)
+- Visual regression testing capabilities
+- Network interception and mocking
+- Parallel test execution
+
+### Writing Tests
+
+**Playwright Test Generation:**
+Use the [Playwright VS Code extension](https://playwright.dev/docs/codegen#generate-tests-in-vs-code) to generate tests:
+
+1. Install the Playwright extension
+2. Start your dev server (`npm run dev`)
+3. Use "Record new test" in VS Code
+4. Remove the baseURL from generated tests (it uses your dev server)
+
+**Component Testing:**
+
+```typescript
+// Example unit test
+import { render } from '@testing-library/svelte';
+import Button from '$lib/components/ui/button/button.svelte';
+
+test('renders button with correct variant', () => {
+	const { getByRole } = render(Button, {
+		props: { variant: 'outline' }
+	});
+
+	expect(getByRole('button')).toHaveClass('border');
+});
+```
+
+### Customization Checklist
+
+Before deploying, update these items:
+
+- [ ] Replace favicon in `static/` directory
+- [ ] Update `site.webmanifest` with your app details
+- [ ] Change `app.html` title and meta tags
+- [ ] Update Sentry configuration in `vite.config.ts`
+- [ ] Set production environment variables
+- [ ] Update Docker image name in `Dockerfile`
+- [ ] Configure domain-specific settings

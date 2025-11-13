@@ -49,6 +49,13 @@ export default ts.config(
 				}
 			],
 
+			'svelte/no-navigation-without-resolve': [
+				'error',
+				{
+					ignoreLinks: true
+				}
+			],
+
 			'@typescript-eslint/no-explicit-any': 'off'
 		}
 	}

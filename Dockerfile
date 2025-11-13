@@ -1,7 +1,7 @@
 # Most of svelte and sveltekit are preprocessors, so the intent is to do all the 
 # build work in one docker build container, then just copy the finished files into
 # a deployable container that's a fraction of the size.
-FROM node:20-alpine AS builder
+FROM node:22-alpine AS builder
 RUN mkdir -p /app
 WORKDIR /app
 COPY . .
@@ -22,7 +22,7 @@ RUN npm prune --production
 # -------------------------------------
 
 # This one is the deployable container!
-FROM node:20-alpine
+FROM node:22-alpine
 RUN mkdir -p /app
 RUN chown node:node /app
 

@@ -1,5 +1,5 @@
 import type { PageServerLoad } from './$types';
-import { apiFetch, type SvelteFetch } from '$lib/utils';
+import { apiFetch, type SvelteFetch } from '$lib/utils/api';
 import { error as handleError } from '@sveltejs/kit';
 
 export const load: PageServerLoad = async ({ fetch, isDataRequest }) => {

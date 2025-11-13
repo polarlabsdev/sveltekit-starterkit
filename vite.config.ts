@@ -2,6 +2,7 @@ import { sentrySvelteKit } from '@sentry/sveltekit';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { sitemapPlugin } from 'sveltekit-sitemap';
 import { defineConfig } from 'vitest/config';
+import tailwindcss from '@tailwindcss/vite';
 import { loadEnv } from 'vite';
 
 export default defineConfig(({ mode }) => {
@@ -17,6 +18,7 @@ export default defineConfig(({ mode }) => {
 					project: env.SENTRY_PROJECT
 				}
 			}),
+			tailwindcss(),
 			sveltekit(),
 			sitemapPlugin()
 		],

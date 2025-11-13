@@ -1,0 +1,214 @@
+/* 
+	GLOBAL TYPOGRAPHY STYLES 
+	import these into tailwind.css
+*/
+@layer base {
+	h1 {
+		@apply scroll-m-20 text-balance text-4xl font-extrabold tracking-tight;
+		font-family: var(--font-display);
+	}
+
+	h2 {
+		@apply mt-10 scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0;
+		font-family: var(--font-header);
+	}
+
+	h3 {
+		@apply mt-8 scroll-m-20 text-2xl font-semibold tracking-tight;
+		font-family: var(--font-header);
+	}
+
+	h4 {
+		@apply scroll-m-20 text-xl font-semibold tracking-tight;
+		font-family: var(--font-header);
+	}
+
+	h5 {
+		@apply scroll-m-20 text-lg font-semibold tracking-tight;
+		font-family: var(--font-header);
+	}
+
+	h6 {
+		@apply scroll-m-20 text-base font-semibold tracking-tight;
+		font-family: var(--font-header);
+	}
+
+	p {
+		@apply leading-6;
+		font-family: var(--font-body);
+	}
+
+	a:not(.no-link-styles) {
+		@apply text-primary font-medium underline underline-offset-4;
+	}
+
+	blockquote {
+		@apply border-l-2 pl-6 italic;
+		font-family: var(--font-body);
+	}
+
+	ul {
+		@apply my-6 ml-6 list-disc [&>li]:mt-2;
+	}
+
+	ol {
+		@apply my-6 ml-6 list-decimal [&>li]:mt-2;
+	}
+
+	li {
+		@apply mt-2;
+		font-family: var(--font-body);
+	}
+
+	code {
+		@apply bg-muted relative rounded px-[0.3rem] py-[0.2rem] text-sm font-semibold;
+		font-family: var(--font-code);
+	}
+
+	pre {
+		@apply overflow-x-auto rounded-lg bg-muted p-4;
+		font-family: var(--font-code);
+	}
+
+	pre code {
+		@apply bg-transparent p-0;
+	}
+
+	table {
+		@apply w-full;
+	}
+
+	thead {
+		@apply [&_tr]:border-b;
+	}
+
+	tbody {
+		@apply [&_tr:last-child]:border-0;
+	}
+
+	tr {
+		@apply border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted;
+	}
+
+	th {
+		@apply h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0;
+		font-family: var(--font-ui);
+	}
+
+	td {
+		@apply p-4 align-middle [&:has([role=checkbox])]:pr-0;
+		font-family: var(--font-ui);
+	}
+}
+
+/* Typography Utility Classes */
+@utility text-large {
+	@apply text-lg font-semibold;
+}
+
+@utility text-small {
+	@apply text-sm font-medium leading-none;
+}
+
+@utility text-muted {
+	@apply text-muted-foreground text-sm;
+}
+
+@utility text-lead {
+	@apply text-xl text-muted-foreground;
+}
+
+@utility text-subtle {
+	@apply text-sm text-muted-foreground;
+}
+
+/* Display variants */
+@utility display-1 {
+	@apply scroll-m-20 text-5xl font-extrabold tracking-tight lg:text-6xl font-display;
+}
+
+@utility display-2 {
+	@apply scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl font-display;
+}
+
+@utility display-3 {
+	@apply scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl font-display;
+}
+
+@utility display-4 {
+	@apply scroll-m-20 text-2xl font-extrabold tracking-tight lg:text-3xl font-display;
+}
+
+/* Quote styles */
+@utility quote {
+	@apply mt-6 border-l-2 pl-6 italic;
+}
+
+@utility quote-author {
+	@apply text-sm font-medium text-muted-foreground mt-2 not-italic;
+}
+
+/* List variants */
+@utility list-styled-none {
+	@apply my-6 ml-0 list-none [&>li]:mt-2;
+}
+
+@utility list-check {
+	@apply my-6 ml-6 [&>li]:mt-2 [&>li]:list-none [&>li]:relative [&>li]:pl-6 [&>li]:before:absolute [&>li]:before:left-0 [&>li]:before:content-['✓'] [&>li]:before:text-green-500;
+}
+
+/* Code and preformatted text variants */
+@utility code-inline {
+	@apply bg-muted relative rounded px-[0.3rem] py-[0.2rem] font-code text-sm font-semibold;
+}
+
+@utility code-block {
+	@apply overflow-x-auto rounded-lg bg-muted p-4 font-code text-sm;
+}
+
+/* Typography rhythm helpers */
+@utility prose {
+	@apply max-w-none;
+}
+
+@utility prose-headings {
+	& h1,
+	& h2,
+	& h3,
+	& h4,
+	& h5,
+	& h6 {
+		@apply text-foreground;
+	}
+}
+
+@utility prose-content {
+	& p {
+		@apply text-foreground font-body;
+	}
+}
+
+@utility prose-links {
+	& a {
+		@apply text-primary no-underline hover:underline font-body;
+	}
+}
+
+@utility prose-emphasis {
+	& strong {
+		@apply font-semibold text-foreground font-body;
+	}
+
+	& em {
+		@apply italic font-body;
+	}
+}
+
+/* Text wrapping utilities */
+@utility text-balance {
+	text-wrap: balance;
+}
+
+@utility text-pretty {
+	text-wrap: pretty;
+}

@@ -1,6 +1,6 @@
 import { handleErrorWithSentry } from '@sentry/sveltekit';
 import * as Sentry from '@sentry/sveltekit';
-import { getSentryOptions } from '$lib/utils';
+import { getSentryOptions } from '$lib/utils/sentry';
 
 Sentry.init(getSentryOptions({ isBrowser: true }));
 
