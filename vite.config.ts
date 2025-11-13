@@ -1,5 +1,6 @@
 import { sentrySvelteKit } from '@sentry/sveltekit';
 import { sveltekit } from '@sveltejs/kit/vite';
+import { svelteTesting } from '@testing-library/svelte/vite';
 import { sitemapPlugin } from 'sveltekit-sitemap';
 import { defineConfig } from 'vitest/config';
 import tailwindcss from '@tailwindcss/vite';
@@ -20,9 +21,12 @@ export default defineConfig(({ mode }) => {
 			}),
 			tailwindcss(),
 			sveltekit(),
+			svelteTesting(),
 			sitemapPlugin()
 		],
 		test: {
+			environment: 'jsdom',
+			setupFiles: ['./vitest-setup.js'],
 			include: ['src/**/*.{test,spec}.{js,ts}']
 		}
 	};
